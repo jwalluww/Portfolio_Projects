@@ -1,49 +1,64 @@
 # ============================================================== #
 # Streamlit App for Consumer Complaints Analysis                 #
 # ============================================================== #
-# Author: Justin Wal
+# Author: Justin Wall
 
 # ============================================================== #
 # Import Libraries                                               #
 # ============================================================== #
 #%%
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import streamlit as st
-import requests
+from utils.data_loader import fetch_complaints
+import pandas as pd
 #%%
 
 # ============================================================== #
-# Hit API for the consumer complaints dataset                    #
+# Set up Streamlit App Basics                                    #
 # ============================================================== #
 #%%
+# Title and header
+st.title("Consumer Complaints Dashboard")
+st.header("Explore and analyze consumer complaints data")
 
-# Define the API endpoint
-url = "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/"
+# Sidebar inputs
+st.sidebar.header("Filters")
+num_complaints = st.sidebar.slider("Number of complaints", 10, 10000, 100)
+fields = st.sidebar.multiselect(
+    "Fields to display",
+    options=['product',
+             'complaint_what_happened',
+             'date_sent_to_company',
+             'issue',
+             'sub_product',
+             'zip_code',
+             'tags',
+             'has_narrative',
+             'complaint_id',
+             'timely',
+             'consumer_consent_provided',
+             'company_response',
+             'submitted_via',
+             'company',
+             'date_received',
+             'state',
+             'consumer_disputed',
+             'company_public_response',
+             'sub_issue'],
+    default=["company", "product"]
+)
 
-# Query parameters
-params = {
-    "field": ["company"],
-    "size": 10,  # Number of records to retrieve
-    "from": 0,   # Starting record
-}
+# Fetch data
+try:
+    st.write("Fetching data from API...")
+    complaints_data = fetch_complaints(size=num_complaints,fields=fields)
+    st.write("### Complaints Data", complaints_data)
+except Exception as e:
+    st.error(f"Error fetching data: {e}")
 
-# Make the GET request
-response = requests.get(url, params=params)
+# Visualization example
+if not complaints_data.empty:
+    st.bar_chart(complaints_data["product"].value_counts())
 
-# Check if the request was successful
-if response.status_code == 200:
-    data = response.json()
-    # Extract the relevant data from the response
-    complaints = [complaint["_source"] for complaint in data["hits"]["hits"]]
-    
-    # Convert the list of complaints into a DataFrame
-    df = pd.DataFrame(complaints)
-    
-    # Print the DataFrame
-    print(df)
-else:
-    print(f"Error: {response.status_code}, {response.text}")
+if not complaints_data.empty:
+    st.bar_chart(complaints_data["company"].value_counts())
 #%%

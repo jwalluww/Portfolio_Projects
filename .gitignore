@@ -6,6 +6,23 @@ __pycache__/
 # C extensions
 *.so
 
+# Datasets
+*.csv
+*.parquet
+*.feather
+*.h5
+*.sqlite
+*.json
+*.pkl
+*.xls
+*.xlsx
+*.db
+*.dbf
+*.shp
+*.shx
+*.prj
+*.cpg
+
 # Distribution / packaging
 .Python
 build/
