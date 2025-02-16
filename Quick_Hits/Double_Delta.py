@@ -1,3 +1,32 @@
+"""
+Double Delta (Difference-in-Differences) Method for Loyalty Program Impact Analysis
+
+📌 **Objective**:
+- Measure the causal impact of a **loyalty program** on customer spending.
+- Use the **Double Delta (Difference-in-Differences) method** to control for natural spending trends.
+- Validate results using **OLS regression**.
+
+🔍 **Key Takeaways**:
+- **Pre-Treatment Spending**: Average spending before the program for both groups.
+- **Post-Treatment Spending**: Spending changes after the program.
+- **Double Delta Effect**: The **true treatment effect** of the loyalty program, isolating organic spending trends.
+- **Robustness Check**: Regression approach confirms statistical significance.
+
+📌 **Methodology**:
+1. **Simulate customer spending data** before and after the program.
+2. **Compute Double Delta Effect**: Difference-in-Differences (DiD) estimator.
+3. **Run Regression for Robustness**:
+   - Fit an **Ordinary Least Squares (OLS) model**: `spending ~ treatment * time`.
+   - Validate statistical significance of treatment effects.
+
+📊 **Interpretation**:
+- **If the Double Delta Effect is positive**, the loyalty program increased spending.
+- **If not significant**, the observed effect may be due to external factors.
+
+✍ **Author**: Justin Wall  
+📅 **Date**: 02/15/2025  
+"""
+
 # ========================================== #
 # Double Delta Method                        #
 # ========================================== #

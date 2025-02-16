@@ -154,10 +154,23 @@ median_attributions, confidence_intervals = gcm.confidence_intervals(
 # Helper function to plot attributions
 def bar_plot(median_attributions, confidence_intervals, title):
     plt.figure(figsize=(8, 5))
-    plt.bar(median_attributions.keys(), median_attributions.values(), yerr=[
-        (median_attributions.values() - confidence_intervals[0].values),
-        (confidence_intervals[1].values - median_attributions.values)
-    ], capsize=5, color="royalblue", alpha=0.7)
+    
+    # Extract the lower and upper bounds of the confidence intervals
+    lower_bounds = {key: confidence_intervals[key][0] for key in confidence_intervals}
+    upper_bounds = {key: confidence_intervals[key][1] for key in confidence_intervals}
+    
+    # Convert dict_values to NumPy arrays
+    median_values = np.array(list(median_attributions.values()))
+    lower_values = np.array(list(lower_bounds.values()))
+    upper_values = np.array(list(upper_bounds.values()))
+    
+    # Calculate the error bars
+    yerr = [
+        median_values - lower_values,
+        upper_values - median_values
+    ]
+    
+    plt.bar(median_attributions.keys(), median_values, yerr=yerr, capsize=5, color="royalblue", alpha=0.7)
     plt.xlabel("Factors")
     plt.ylabel("Anomaly Attribution Score")
     plt.title(title)
