@@ -1,4 +1,23 @@
+"""
+Multi-Armed Bandit Simulation
 
+📌 **Objective**:
+- Create a synthetic dataset for a retail pricing problem where we analyze the causal effects of a price change on customer demand
+- Understand relationship between product price, advertising spend, competitor pricing, and customer demand
+
+🔍 **Key Takeaways**:
+- **BLAH**: 
+- **Next Steps**: 
+    - 
+
+📌 **Methodology**:
+1. **Create a causal graph** using NetworkX
+2. **Perform causal discovery** using DoWhy
+
+
+✍ **Author**: Justin Wall
+📅 **Date**: 02/13/2025
+"""
 
 # =======================================
 # Create dataset for MAB simulation
@@ -95,7 +114,7 @@ plt.show()
 #%%
 
 # =======================================
-# Greedy Algorithm
+# New dataset for some reason
 # =======================================
 #%%
 import numpy as np
@@ -132,13 +151,18 @@ for _ in range(n_samples):
     data.append([price, demand, tod, dow, accepted, revenue])
 
 df = pd.DataFrame(data, columns=["Price", "Demand_Level", "Time_of_Day", "Day_of_Week", "Accepted", "Revenue"])
+#%%
 
+# =======================================
 # Implement Greedy Algorithm
+# =======================================
+#%%
 price_revenue = {p: [] for p in prices}  # Track revenue for each price
 
 def greedy_bandit(n_rounds=1000):
     chosen_prices = []
     total_revenue = 0
+    revenue_over_time = []
     
     for _ in range(n_rounds):
         # Pick price with highest average revenue (or random if no history)
@@ -153,15 +177,45 @@ def greedy_bandit(n_rounds=1000):
         price_revenue[best_price].append(revenue)
         total_revenue += revenue
         chosen_prices.append(best_price)
+        revenue_over_time.append(total_revenue)
     
-    return chosen_prices, total_revenue
+    return chosen_prices, revenue_over_time
 
 # Run the greedy algorithm
-chosen_prices, total_revenue = greedy_bandit()
+chosen_prices, revenue_over_time = greedy_bandit()
+
+# =======================================
+# Display results
+# =======================================
+#%%
+# Visualization
+plt.figure(figsize=(12, 4))
+plt.plot(revenue_over_time, label='Cumulative Revenue', color='green')
+plt.xlabel('Rounds')
+plt.ylabel('Total Revenue')
+plt.title('Cumulative Revenue Over Time')
+plt.legend()
+plt.show()
+
+# Plot price selection over time
+plt.figure(figsize=(12, 4))
+plt.plot(chosen_prices, marker='o', linestyle='', alpha=0.5)
+plt.xlabel('Rounds')
+plt.ylabel('Chosen Price')
+plt.title('Greedy Algorithm Price Selection Over Time')
+plt.show()
+
+# Histogram of final chosen price distribution
+chosen_price_counts = pd.Series(chosen_prices).value_counts().sort_index()
+plt.figure(figsize=(8, 4))
+plt.bar(chosen_price_counts.index, chosen_price_counts.values, color='blue', alpha=0.7)
+plt.xlabel('Price')
+plt.ylabel('Times Chosen')
+plt.title('Final Chosen Price Distribution')
+plt.show()
 
 # Display results
-chosen_price_counts = pd.Series(chosen_prices).value_counts().sort_index()
 print("Final chosen price distribution:")
 print(chosen_price_counts)
-print(f"Total revenue over {len(chosen_prices)} rounds: ${total_revenue}")
+print(f"Total revenue over {len(chosen_prices)} rounds: ${sum(revenue_over_time)}")
 #%%
