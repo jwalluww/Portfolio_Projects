@@ -153,17 +153,80 @@ def compute_aic_bic(model, X, lengths):
     bic = n_params * np.log(n_obs) - 2 * logL
     return logL, aic, bic
 
+# Train HMM with 1 hidden state
+model_1 = hmm.MultinomialHMM(n_components=1, n_iter=100)
+model_1.fit(X.reshape(-1, 1))
+logL_1, aic_1, bic_1 = compute_aic_bic(model_1, X.reshape(-1, 1), lengths)
+
+# Train HMM with 2 hidden states
+model_2 = hmm.MultinomialHMM(n_components=2, n_iter=100)
+model_2.fit(X.reshape(-1, 1))
+logL_2, aic_2, bic_2 = compute_aic_bic(model_2, X.reshape(-1, 1), lengths)
+
+# Train HMM with 3 hidden states
+model_3 = hmm.MultinomialHMM(n_components=3, n_iter=100)
+model_3.fit(X.reshape(-1, 1))
+logL_3, aic_3, bic_3 = compute_aic_bic(model_3, X.reshape(-1, 1), lengths)
+
 # Train HMM with 4 hidden states
-model_4 = hmm.MultinomialHMM(n_components=4, n_iter=100, random_state=42)
-model_4.fit(X, lengths)
-logL_4, aic_4, bic_4 = compute_aic_bic(model_4, X, lengths)
+model_4 = hmm.MultinomialHMM(n_components=4, n_iter=100)
+model_4.fit(X.reshape(-1, 1))
+logL_4, aic_4, bic_4 = compute_aic_bic(model_4, X.reshape(-1, 1), lengths)
 
 # Train HMM with 5 hidden states
-model_5 = hmm.MultinomialHMM(n_components=5, n_iter=100, random_state=42)
-model_5.fit(X, lengths)
-logL_5, aic_5, bic_5 = compute_aic_bic(model_5, X, lengths)
+model_5 = hmm.MultinomialHMM(n_components=5, n_iter=100)
+model_5.fit(X.reshape(-1, 1))
+logL_5, aic_5, bic_5 = compute_aic_bic(model_5, X.reshape(-1, 1), lengths)
+
+# Train HMM with 6 hidden states
+model_6 = hmm.MultinomialHMM(n_components=6, n_iter=100)
+model_6.fit(X.reshape(-1, 1))
+logL_6, aic_6, bic_6 = compute_aic_bic(model_6, X.reshape(-1, 1), lengths)
 
 # Display the results
+print(f"Model with 1 Hidden State: LogL = {logL_1}, AIC = {aic_1}, BIC = {bic_1}")
+print(f"Model with 2 Hidden States: LogL = {logL_2}, AIC = {aic_2}, BIC = {bic_2}")
+print(f"Model with 3 Hidden States: LogL = {logL_3}, AIC = {aic_3}, BIC = {bic_3}")
 print(f"Model with 4 Hidden States: LogL = {logL_4}, AIC = {aic_4}, BIC = {bic_4}")
 print(f"Model with 5 Hidden States: LogL = {logL_5}, AIC = {aic_5}, BIC = {bic_5}")
+print(f"Model with 6 Hidden States: LogL = {logL_6}, AIC = {aic_6}, BIC = {bic_6}")
+#%%
+
+# =============================================
+# Visualize the Hidden States
+# =============================================
+#%%
+# Re-import necessary libraries since the execution state was reset
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from hmmlearn import hmm
+
+# Define the labels for observed actions
+observed_labels = ["Browse", "Email Engagement", "App Engagement", "Engaged Browse", "Purchase"]
+
+# Define and visualize the transition matrix and emission probabilities for the chosen HMM models
+
+def plot_matrix(matrix, labels, title, cmap="Blues"):
+    """Helper function to plot transition and emission matrices."""
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(matrix, annot=True, fmt=".2f", cmap=cmap, xticklabels=labels, yticklabels=labels)
+    plt.title(title)
+    plt.xlabel("To State")
+    plt.ylabel("From State")
+    plt.show()
+
+# Plot transition matrices
+plot_matrix(model_4.transmat_, ["State 0", "State 1", "State 2", "State 3"], "Transition Matrix (4 States)")
+plot_matrix(model_3.transmat_, ["State 0", "State 1", "State 2"], "Transition Matrix (3 States)")
+
+# Plot emission probabilities
+plot_matrix(model_4.emissionprob_, observed_labels, "Emission Probabilities (4 States)")
+plot_matrix(model_3.emissionprob_, observed_labels, "Emission Probabilities (3 States)")
+
+# Extract the emission probabilities for interpretation
+emission_probs_4 = model_4.emissionprob_
+emission_probs_3 = model_3.emissionprob_
+
+emission_probs_4, emission_probs_3
 #%%
