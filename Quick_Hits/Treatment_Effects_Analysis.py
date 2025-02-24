@@ -1,13 +1,13 @@
 """
-Email Campaign Uplift Model - Causal Inference Study
+Treatment Effects Analysis - Observational & Experimental Studies
 
 📌 **Objective**:
-- Estimate the impact of an email marketing campaign on purchases.
+- Estimate the impact of a treatment on purchases.
 - Use **Propensity Score Matching (PSM)** to estimate **ATT**.
 - Compare treatment and control groups while reducing bias.
 
 🔍 **Key Takeaways**:
-- **ATE**: The email had a lift of X% across all users.
+- **ATE**: The treatment had a lift of X% across all users.
 - **ATT (Using PSM)**: The effect was higher for those who received the email, showing X% uplift.
 - **PSM worked well** to create a balanced comparison group.
 - **Next Steps**: 
@@ -23,9 +23,9 @@ Email Campaign Uplift Model - Causal Inference Study
 📅 **Date**: 02/13/2025
 """
 
-# ========================================= #
-# Treatment Effects Analysis - Observation  #
-# ========================================= #
+# =========================================
+# Create Synthetic Dataset for Observational Study
+# =========================================
 #%%
 import numpy as np
 import pandas as pd
@@ -65,41 +65,41 @@ df.head()
 #%%
 
 
-# ========================================= #
-# Average Treatment Effect (ATE)            #
-# ========================================= #
+# =========================================
+# Average Treatment Effect (ATE)           
+# =========================================
 #%%
 ate = (df["y1"] - df["y0"]).mean()
 print(f"ATE: {ate:.2f}")
 #%%
 
-# ========================================= #
-# Average Treatment Effect on the Treated   #
-# ========================================= #
+# =========================================
+# Average Treatment Effect on the Treated  
+# =========================================
 #%%
 att = (df[df["treatment"] == 1]["y1"] - df[df["treatment"] == 1]["y0"]).mean()
 print(f"ATT: {att:.2f}")
 #%%
 
-# ========================================= #
-# Average Treatment Effect on the Untreated #
-# ========================================= #
+# =========================================
+# Average Treatment Effect on the Untreated 
+# ========================================= 
 #%%
 atu = (df[df["treatment"] == 0]["y1"] - df[df["treatment"] == 0]["y0"]).mean()
 print(f"ATU: {atu:.2f}")
 #%%
 
-# ========================================= #
-# Individual Treatment Effect               #
-# ========================================= #
+# ========================================= 
+# Individual Treatment Effect               
+# ========================================= 
 #%%
 df["ITE"] = df["y1"] - df["y0"]
 df[["education", "experience", "ITE"]].head()
 #%%
 
-# ========================================= #
-# Conditional Average Treatment Effect      #
-# ========================================= #
+# ========================================= 
+# Conditional Average Treatment Effect      
+# ========================================= 
 #%%
 cate_by_education = df.groupby("education")["ITE"].mean()
 print("CATE by Education Level:")
@@ -110,9 +110,9 @@ print(cate_by_education)
 
 
 
-# ========================================= #
-# Treatment Effects Analysis - Experimental #
-# ========================================= #
+# =========================================
+# Create Synthetic Dataset for Experimental Study
+# =========================================
 #%%
 import numpy as np
 import pandas as pd
@@ -160,9 +160,9 @@ df.head()
 # purchase = 1/0 purchase made
 # covariates = age, income, past_purchases
 
-# ========================================= #
-# Average Treatment Effect (ATE)            #
-# ========================================= #
+# ========================================= 
+# Average Treatment Effect (ATE)            
+# ========================================= 
 #%%
 # Estimate ATE using observed data
 ate = df[df['treatment'] == 1]['purchase'].mean() - df[df['treatment'] == 0]['purchase'].mean()
@@ -172,9 +172,9 @@ print(f"Estimated ATE: {ate:.4f}")
 # Since we cannot observe counterfactuals, we simply subtract the means to calculate the ATE, it's basically the lift
 # Overall campaign effectiveness on entire customer base
 
-# ========================================= #
-# Propensity Score Modeling PSM             #
-# ========================================= #
+# ========================================= 
+# Propensity Score Modeling PSM             
+# ========================================= 
 #%%
 from sklearn.linear_model import LogisticRegression
 
@@ -211,9 +211,9 @@ matched_df["matched_control_purchase"] = matched_control["purchase"]
 
 # Create model with treatment as target, match using k-nearest neighbors
 
-# ========================================= #
-# Average Treatment Effect on the Treated   #
-# ========================================= #
+# ========================================= 
+# Average Treatment Effect on the Treated   
+# ========================================= 
 #%%
 # Calculate ATT using matched treated-control pairs
 att = (matched_df["purchase"] - matched_df["matched_control_purchase"]).mean()
@@ -227,9 +227,9 @@ print(f"Estimated ATT using PSM: {att:.4f}")
 # Impact on engaged customers - effect on those who received the email
 # Match each treated individual with a similar untreated individual based on covariates
 
-# ========================================= #
-# Average Treatment Effect on the Untreated #
-# ========================================= #
+# ========================================= 
+# Average Treatment Effect on the Untreated 
+# ========================================= 
 #%%
 from sklearn.linear_model import LogisticRegression
 
@@ -250,9 +250,9 @@ print(f"Estimated ATU: {atu:.4f}")
 # What we missed out on - effect on those who did not receive the email
 # Use inverse probability weighting (IPW) to reweight the control group to resemble the treated group.
 
-# ========================================= #
-# Conditional Average Treatment Effect      #
-# ========================================= #
+# ========================================= 
+# Conditional Average Treatment Effect      
+# ========================================= 
 #%%
 from econml.dml import CausalForestDML
 from sklearn.ensemble import RandomForestRegressor
@@ -274,9 +274,9 @@ print(df[['age', 'income', 'CATE']].head())
 # Use Causal Forests or Bayesian Causal Forests to estimate treatment effects for subgroups.
 
 
-# ========================================= #
-# Individual Treatment Effect               #
-# ========================================= #
+# ========================================= 
+# Individual Treatment Effect               
+# ========================================= 
 #%%
 from econml.metalearners import XLearner
 
@@ -292,9 +292,9 @@ df[['age', 'income', 'ITE']].head()
 # Use uplift modeling or meta-learners (T-Learner, X-Learner).
 
 
-# ========================================= #
-# Conclusion                                #
-# ========================================= #
+# ========================================= 
+# Conclusion                                
+# ========================================= 
 # If ATT > ATE, the treatment works better for specific groups
 # If ATU is low, avoid targeting non responders
 # CATE & ITE help identify high responders

@@ -2,69 +2,94 @@
 Hidden Markov Model (HMM) for Customer Journey Analysis
 
 📌 **Objective**:
-- Create a synthetic dataset for a retail pricing problem where we analyze the causal effects of a price change on customer demand
-- Understand relationship between product price, advertising spend, competitor pricing, and customer demand
+- Create synthetic customer journey data with new observation types.
+- Build a Hidden Markov Model (HMM) to predict hidden states from observed actions.
 
 🔍 **Key Takeaways**:
-- **BLAH**: 
-- **Next Steps**: 
-    - 
+- We can use HMMs to model sequences of observations and infer hidden states.
+
+🏹 **Next Steps**: 
+- Research more advanced methods or complex situations
 
 📌 **Methodology**:
-Bayesian Networks (BNs)
-
-Directed Acyclic Graph (DAG) where nodes represent variables, and edges represent causal or probabilistic dependencies.
-Uses Conditional Probability Tables (CPTs) to define relationships.
-Ideal for causal modeling, decision support, and prediction.
-Use case fit: ✅ Best for supply chain risk estimation because disruptions often follow a causal chain (e.g., raw material shortages → production delays → supplier failure).
-PGMPY also supports Markov Networks but follow undirect graphs that do not have causal relationship - not as good for supply chain risk estimation.
+- **Step 1**: Create Fake Dataset for Customer Journey
 
 ✍ **Author**: Justin Wall
-📅 **Date**: 02/16/2025
+📅 **Date**: 02/20/2025
 """
 
 # =============================================
 # Create Fake Dataset for Customer Journey
 # =============================================
 #%%
-# Re-import necessary libraries since execution state was reset
 import numpy as np
 import pandas as pd
+
+# Set random seed for reproducibility
+np.random.seed(42)
 
 # Define dataset parameters
 num_users = 500  # Number of users
 max_days = 30  # Max tracking window for each user
 dormancy_threshold = 7  # Days of inactivity before considering a user lost
 
-# Define the new observation types
+# Define observation types and their probabilities
 observations = ["browse", "email_engagement", "app_engagement", "engaged_browse", "purchase"]
-obs_probs = [0.5, 0.15, 0.1, 0.2, 0.05]  # Probabilities for each action type
+obs_probs = [0.5, 0.15, 0.1, 0.2, 0.05]  # Initial probabilities
 
-# Generate user journeys with the new observations
+# Define hidden states (simulating underlying behavioral groups)
+hidden_states = ["Exploring", "Engaged", "Highly Engaged", "Buyers", "Dormant"]
+state_transition_probs = {
+    "Exploring": [0.6, 0.25, 0.1, 0.05, 0.0],  # Most stay exploring, some progress
+    "Engaged": [0.2, 0.5, 0.2, 0.1, 0.0],  # Can go back, stay, or progress
+    "Highly Engaged": [0.1, 0.2, 0.4, 0.3, 0.0],  # Higher chance of purchase
+    "Buyers": [0.0, 0.0, 0.0, 1.0, 0.0],  # Stay in "Buyers" after purchase
+    "Dormant": [0.1, 0.05, 0.05, 0.0, 0.8]  # Mostly stay dormant
+}
+
+# Observation probabilities per hidden state
+emission_probs = {
+    "Exploring": [0.7, 0.1, 0.05, 0.1, 0.05],  
+    "Engaged": [0.3, 0.3, 0.15, 0.2, 0.05],
+    "Highly Engaged": [0.1, 0.2, 0.3, 0.3, 0.1],
+    "Buyers": [0.0, 0.05, 0.05, 0.1, 0.8],
+    "Dormant": [0.4, 0.1, 0.05, 0.05, 0.0]
+}
+
+# Generate user journeys with hidden states
 user_data = []
 for user_id in range(1, num_users + 1):
     start_date = pd.to_datetime("2024-01-01") + pd.to_timedelta(np.random.randint(0, 10), unit='D')
     current_date = start_date
     last_action_date = start_date
-    actions = []
+
+    # Start each user in the "Exploring" state
+    state = "Exploring"
     outcome = None
 
     while True:
-        # Decide next action
-        action = np.random.choice(observations, p=obs_probs)
-        actions.append((current_date, action))
-        last_action_date = current_date
+        # Choose an action based on current hidden state
+        action = np.random.choice(observations, p=emission_probs[state])
+        
+        # Store event
+        user_data.append([user_id, current_date, state, action])
 
         # If purchase, stop tracking
         if action == "purchase":
+            state = "Buyers"
             outcome = "purchased"
             break
+
+        last_action_date = current_date
 
         # Move to the next day
         current_date += pd.Timedelta(days=1)
 
+        # Transition to a new hidden state
+        state = np.random.choice(hidden_states, p=state_transition_probs[state])
+
         # Check dormancy
-        if (current_date - last_action_date).days >= dormancy_threshold:
+        if state == "Dormant" and (current_date - last_action_date).days >= dormancy_threshold:
             outcome = "lost"
             break
 
@@ -72,12 +97,8 @@ for user_id in range(1, num_users + 1):
         if (current_date - start_date).days > max_days:
             break
 
-    # Store user journey
-    for event_date, action in actions:
-        user_data.append([user_id, start_date, event_date, action, (event_date - start_date).days, outcome])
-
 # Create DataFrame
-df = pd.DataFrame(user_data, columns=["User ID", "Start Date", "Event Date", "Action", "Days Since Start", "Outcome"])
+df = pd.DataFrame(user_data, columns=["User ID", "Event Date", "Hidden State", "Action"])
 
 # Sort data
 df = df.sort_values(by=["User ID", "Event Date"]).reset_index(drop=True)
@@ -219,6 +240,7 @@ def plot_matrix(matrix, labels, title, cmap="Blues"):
 # Plot transition matrices
 plot_matrix(model_4.transmat_, ["State 0", "State 1", "State 2", "State 3"], "Transition Matrix (4 States)")
 plot_matrix(model_3.transmat_, ["State 0", "State 1", "State 2"], "Transition Matrix (3 States)")
+# This tells us how likely it is for a customer to move from one hidden state to another.
 
 # Plot emission probabilities
 plot_matrix(model_4.emissionprob_, observed_labels, "Emission Probabilities (4 States)")
@@ -227,6 +249,60 @@ plot_matrix(model_3.emissionprob_, observed_labels, "Emission Probabilities (3 S
 # Extract the emission probabilities for interpretation
 emission_probs_4 = model_4.emissionprob_
 emission_probs_3 = model_3.emissionprob_
+# This tells us what actions (browse, email engagement, app engagement, engaged browse, purchase) are most likely to be observed in each hidden state.
 
 emission_probs_4, emission_probs_3
+#%%
+
+# =============================================
+# For the prebuilt Hidden States
+# =============================================
+#%%
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Define hidden states
+hidden_states = ["Exploring", "Engaged", "Highly Engaged", "Buyers"]
+
+# Define observed actions
+observations = ["browse", "email_engagement", "app_engagement", "engaged_browse", "purchase"]
+
+# Given action counts per hidden state
+emission_counts = {
+    "Exploring": {"browse": 1266, "email_engagement": 175, "app_engagement": 92, "engaged_browse": 172, "purchase": 90},
+    "Engaged": {"browse": 302, "email_engagement": 289, "app_engagement": 124, "engaged_browse": 173, "purchase": 37},
+    "Highly Engaged": {"browse": 62, "email_engagement": 122, "app_engagement": 171, "engaged_browse": 165, "purchase": 59},
+    "Buyers": {"browse": 0, "email_engagement": 17, "app_engagement": 17, "engaged_browse": 40, "purchase": 313},
+}
+
+# Normalize emission matrix to get probabilities
+emission_matrix = pd.DataFrame(emission_counts)
+emission_matrix = emission_matrix.div(emission_matrix.sum(axis=0), axis=1)
+
+# Generate random transition matrix (adjust if you have real transitions)
+np.random.seed(42)
+transition_matrix = pd.DataFrame(
+    np.random.dirichlet(np.ones(len(hidden_states)), size=len(hidden_states)),
+    index=hidden_states,
+    columns=hidden_states
+)
+
+# Plot emission matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(emission_matrix, annot=True, cmap="Blues", fmt=".2f")
+plt.title("Emission Matrix (Observed Actions Given Hidden State)")
+plt.ylabel("Observed Actions")
+plt.xlabel("Hidden States")
+plt.show()
+
+# Plot transition matrix
+plt.figure(figsize=(8, 6))
+sns.heatmap(transition_matrix, annot=True, cmap="Reds", fmt=".2f")
+plt.title("Transition Matrix (State-to-State Probabilities)")
+plt.ylabel("From State")
+plt.xlabel("To State")
+plt.show()
+
 #%%

@@ -2,22 +2,22 @@
 Bayesian Network for Supply Chain Risk Mitigation using BNLearn
 
 📌 **Objective**:
-- Create a synthetic dataset for a retail pricing problem where we analyze the causal effects of a price change on customer demand
-- Understand relationship between product price, advertising spend, competitor pricing, and customer demand
-
-🔍 **Key Takeaways**:
-- **BLAH**: 
-- **Next Steps**: 
-    - 
+- Determine the causal relationships between various factors in a supply chain to estimate the risk of disruptions.
+- Use Bayesian Networks to model the dependencies between supplier delays, inventory levels, production delays, demand surges, and customer delays.
 
 📌 **Methodology**:
 Bayesian Networks (BNs)
-
 Directed Acyclic Graph (DAG) where nodes represent variables, and edges represent causal or probabilistic dependencies.
 Uses Conditional Probability Tables (CPTs) to define relationships.
 Ideal for causal modeling, decision support, and prediction.
 Use case fit: ✅ Best for supply chain risk estimation because disruptions often follow a causal chain (e.g., raw material shortages → production delays → supplier failure).
 PGMPY also supports Markov Networks but follow undirect graphs that do not have causal relationship - not as good for supply chain risk estimation.
+
+🔍 **Key Takeaways**:
+- This library is best for fitting Bayesian Networks to data and performing causal inference. 
+
+📊 **Next Steps**
+- Compare BNLearn with PGMPY for Bayesian Network modeling on the same dataset.
 
 ✍ **Author**: Justin Wall
 📅 **Date**: 02/16/2025

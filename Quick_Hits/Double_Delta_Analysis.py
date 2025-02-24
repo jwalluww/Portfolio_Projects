@@ -2,14 +2,14 @@
 Double Delta (Difference-in-Differences) Method for Loyalty Program Impact Analysis
 
 📌 **Objective**:
-- Measure the causal impact of a **loyalty program** on customer spending.
-- Use the **Double Delta (Difference-in-Differences) method** to control for natural spending trends.
-- Validate results using **OLS regression**.
+- Measure the causal impact of a treatment on customer spending.
+- Use the Double Delta (Difference-in-Differences) method to control for natural spending trends.
+- Validate results using OLS regression.
 
 🔍 **Key Takeaways**:
 - **Pre-Treatment Spending**: Average spending before the program for both groups.
 - **Post-Treatment Spending**: Spending changes after the program.
-- **Double Delta Effect**: The **true treatment effect** of the loyalty program, isolating organic spending trends.
+- **Double Delta Effect**: The true treatment effect of the loyalty program, isolating organic spending trends.
 - **Robustness Check**: Regression approach confirms statistical significance.
 
 📌 **Methodology**:
@@ -27,9 +27,9 @@ Double Delta (Difference-in-Differences) Method for Loyalty Program Impact Analy
 📅 **Date**: 02/15/2025  
 """
 
-# ========================================== #
-# Double Delta Method                        #
-# ========================================== #
+# ==========================================
+# Create synthetic dataset
+# ==========================================
 #%%
 import numpy as np
 import pandas as pd
@@ -60,9 +60,9 @@ df["post_spending"] = df["pre_spending"] + df["spending_growth"] + (df["treatmen
 df.head()
 #%%
 
-# ========================================== #
-# Compute Double Delta Effect                #
-# ========================================== #
+# ==========================================
+# Compute Double Delta Effect               
+# ==========================================
 #%%
 # Compute average spending before & after for both groups
 pre_treated = df[df["treatment"] == 1]["pre_spending"].mean()
@@ -82,9 +82,9 @@ print(f"Double Delta Effect: ${double_delta:.2f}")
 #%%
 
 
-# ========================================== #
-# Robustness Check using Regression          #
-# ========================================== #
+# ==========================================
+# Robustness Check using Regression         
+# ==========================================
 #%%
 import statsmodels.api as sm
 import statsmodels.formula.api as smf

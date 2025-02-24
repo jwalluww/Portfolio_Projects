@@ -5,15 +5,16 @@ Causal Inferece on Pricing Strategy & Customer Demand using DoWhy & NetworkX
 - Create a synthetic dataset for a retail pricing problem where we analyze the causal effects of a price change on customer demand
 - Understand relationship between product price, advertising spend, competitor pricing, and customer demand
 
-🔍 **Key Takeaways**:
-- **BLAH**: 
-- **Next Steps**: 
-    - 
-
 📌 **Methodology**:
-1. **Create a causal graph** using NetworkX
-2. **Perform causal discovery** using DoWhy
+1. Create synthetic retail pricing dataset
+2. Design a causal graph based on domain knowledge
+3. Perform causal discovery using DoWhy
 
+🔍 **Key Takeaways**:
+- This methodology was valuable in determining the cause of a revenue drop
+
+📊 **Next Steps**: 
+- Run some more tests to determine causality using the DAG
 
 ✍ **Author**: Justin Wall
 📅 **Date**: 02/13/2025
@@ -95,8 +96,6 @@ fit(model, df)
 # Evaluate Causal Graph             #
 # ================================= #
 #%%
-from dowhy.gcm import evaluate_causal_model
-
 
 gcm.evaluate_causal_model(
     model,

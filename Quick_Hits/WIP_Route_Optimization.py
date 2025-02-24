@@ -27,3 +27,23 @@ PGMPY also supports Markov Networks but follow undirect graphs that do not have 
 # Create Fake Dataset for Route Optimization
 # =============================================
 #%%
+import numpy as np
+import pandas as pd
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# Number of delivery locations
+num_locations = 10
+
+# Generate random (x, y) coordinates for warehouse and delivery locations
+warehouse = (0, 0)  # Assume warehouse is at origin
+locations = np.random.uniform(-50, 50, size=(num_locations, 2))
+
+# Combine warehouse and locations into a DataFrame
+df = pd.DataFrame(np.vstack([warehouse, locations]), columns=["x", "y"])
+df.index.name = "Location_ID"
+df["Type"] = ["Warehouse"] + ["Delivery"] * num_locations
+
+print(df)
+#%%
