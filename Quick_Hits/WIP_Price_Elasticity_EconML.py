@@ -93,8 +93,8 @@ X_train = scaler.fit_transform(train.drop(columns=['sales', 'price', 'supplier_c
 X_test = scaler.transform(test.drop(columns=['sales', 'price', 'supplier_cost']))
 
 # Treatment (Price) and Outcome (Sales)
-T_train, T_test, Z_test = test['price'], test['price'], test['supplier_cost']
-Y_train, Y_test, Z_train = train['sales'], train['sales'], train['supplier_cost']
+Y_test, T_test, Z_test = test['sales'], test['price'], test['supplier_cost']
+Y_train, T_train, Z_train = train['sales'], train['price'], train['supplier_cost']
 #%%
 
 # ==========================================
@@ -144,7 +144,7 @@ print("Estimated Price Elasticity (Mean):", np.mean(price_elasticity))
 # ==========================================
 #%%
 iv_model = DMLIV(discrete_treatment=False,
-                 discrete_instrument=True,
+                 discrete_instrument=False,
                  random_state=42)
 
 iv_model.fit(Y=Y_train, T=T_train, Z=Z_train, X=X_train)
