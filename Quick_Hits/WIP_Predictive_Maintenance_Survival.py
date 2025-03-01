@@ -62,5 +62,4 @@ df = pd.DataFrame({
 
 # Display sample data
 df.head()
-
 #%%

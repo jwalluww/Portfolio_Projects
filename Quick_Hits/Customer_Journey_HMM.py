@@ -98,7 +98,7 @@ for user_id in range(1, num_users + 1):
             break
 
 # Create DataFrame
-df = pd.DataFrame(user_data, columns=["User ID", "Event Date", "Hidden State", "Action"])
+df = pd.DataFrame(user_data, columns=["User ID", "Event Date", "Fake Hidden State", "Action"])
 
 # Sort data
 df = df.sort_values(by=["User ID", "Event Date"]).reset_index(drop=True)
@@ -306,3 +306,23 @@ plt.xlabel("To State")
 plt.show()
 
 #%%
+
+# Emission Matrix
+# What This Tells Us
+# Exploring: These users are overwhelmingly browsing (70.5%), with very little deep engagement. Some email engagement (9.7%) and engaged browsing (9.6%) occur, but purchasing is low (5.0%).
+# Engaged: A more balanced mix of behaviors—32.6% still browsing, but 31.2% engaging via email, and more app engagement (13.4%). Purchases are still low (4.0%).
+# Highly Engaged: These users have high app engagement (29.5%) and engaged browsing (28.5%), meaning they’re interacting deeply. Their purchase rate (10.2%) is still relatively low but increasing.
+# Buyers: The majority of actions are purchases (80.9%). These users rarely browse (0.0%), meaning they likely go directly to buying.
+# Key Takeaway:
+# Customers generally move from browsing to more engaged behaviors before purchasing. Engaged browsing and app engagement seem to be strong indicators of an eventual purchase.
+
+# What This Tells Us
+# Exploring → Engaged (52.7%): Over half of users move from "Exploring" to "Engaged," meaning many users deepen their engagement after initial browsing.
+# Engaged → Buyers (83.4%): Once users become engaged, a large portion of them (83.4%) proceed directly to purchase.
+# Highly Engaged → Buyers (61.7%): Many users in this state purchase, but some still stay in this high-engagement state without converting.
+# Buyers → Exploring (73.6%): A huge portion of buyers move back to "Exploring," likely meaning repeat customers re-enter the journey.
+# Key Takeaway:
+
+# The most reliable conversion path is Engaged → Buyers (83.4%).
+# The Highly Engaged state is not necessarily required for a purchase but does increase engagement.
+# Once a customer buys, they are very likely to return to the Exploring phase, possibly looking for new products.
