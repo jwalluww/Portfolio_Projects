@@ -33,6 +33,14 @@ import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter, CoxPHFitter
 from lifelines.statistics import logrank_test, proportional_hazard_test
 import seaborn as sns
+from sksurv.ensemble import RandomSurvivalForest
+from sksurv.util import Surv
+from sklearn.model_selection import train_test_split
+from lifelines import WeibullAFTFitter, LogNormalAFTFitter, LogLogisticAFTFitter
+# from lifelines import ExponentialAFTFitter # Not implemented in lifelines 0.26.0
+from lifelines.utils import concordance_index
+import pymc as pm
+import arviz as az
 
 # Set seed for reproducibility
 np.random.seed(42)
@@ -152,9 +160,8 @@ plt.show()
 # Check proportional hazards assumption
 # =============================================
 #%%
-data = df.drop(columns=['Vibration_Group'])
 # Check proportional hazards assumption using Schoenfeld residuals
-results = cph.check_assumptions(data, p_value_threshold=0.05, show_plots=True)
+results = cph.check_assumptions(cph_data, p_value_threshold=0.05, show_plots=True)
 #%%
 
 # =============================================
@@ -223,3 +230,139 @@ cost_summary
 # non parametric model Weibull or something
 # Random Survival Forest
 
+# =============================================
+# Add new variables and respecify the model
+# =============================================
+#%%
+# Humidity (Continuous variable, e.g., 0-100%)
+# Maintenance History (Binary: 1 if maintenance performed in last 30 days, 0 otherwise)
+# Extend dataset with synthetic Humidity and Maintenance History variables
+df["Humidity"] = np.random.uniform(20, 80, size=len(df))  # Random humidity between 20% and 80%
+df["Maintenance_History"] = np.random.choice([0, 1], size=len(df), p=[0.7, 0.3])  # 30% had recent maintenance
+
+# Cox Proportional Hazards Model
+cph = CoxPHFitter()
+cph_data = df[['Time_to_Failure', 'Failure_Event', 'Temperature', 'Vibration', 'Load', 'Humidity', 'Maintenance_History']]
+cph.fit(cph_data, duration_col='Time_to_Failure', event_col='Failure_Event')
+
+# Display model summary
+cph.print_summary()
+
+# Plot hazard ratios
+plt.figure(figsize=(8, 6))
+cph.plot()
+plt.title("Cox Proportional Hazards Model - Hazard Ratios")
+plt.show()
+
+# Fit is only slightly better...0.57 concordance, eh
+#%%
+
+# =============================================
+# Survival Analysis with Random Survival Forest
+# =============================================
+#%%
+# Ensure df has necessary columns (recreate if needed)
+required_cols = ['Time_to_Failure', 'Failure_Event', 'Temperature', 'Vibration', 'Load', 'Humidity', 'Maintenance_History']
+df = df[required_cols].dropna()  # Drop any missing values
+
+# Prepare survival dataset format
+y = Surv.from_dataframe("Failure_Event", "Time_to_Failure", df)
+X = df.drop(columns=["Time_to_Failure", "Failure_Event"])
+
+# Split data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train Random Survival Forest model
+rsf = RandomSurvivalForest(n_estimators=100, min_samples_split=10, min_samples_leaf=5, random_state=42)
+rsf.fit(X_train, y_train)
+
+# Evaluate model using concordance index
+rsf_cindex = rsf.score(X_test, y_test)
+
+# Extract feature importance
+# feature_importance = pd.Series(rsf.feature_importances_, index=X.columns).sort_values(ascending=False)
+# Feature importances actually aren't implemented for RandomSurvivalForest in scikit-survival
+# But you can use gradient boosting survival models for feature importances!!!
+
+rsf_cindex
+# 0.55 concordance index, similar to Cox model
+#%%
+
+
+# =============================================
+# Parametric Survival Models
+# =============================================
+#%%
+# Initialize models
+weibull_aft = WeibullAFTFitter()
+# exp_aft = ExponentialAFTFitter()
+lognormal_aft = LogNormalAFTFitter()
+loglogistic_aft = LogLogisticAFTFitter()
+
+# Fit models on dataset (ensure df is available)
+weibull_aft.fit(df, duration_col="Time_to_Failure", event_col="Failure_Event")
+# exp_aft.fit(df, duration_col="Time_to_Failure", event_col="Failure_Event")
+lognormal_aft.fit(df, duration_col="Time_to_Failure", event_col="Failure_Event")
+loglogistic_aft.fit(df, duration_col="Time_to_Failure", event_col="Failure_Event")
+
+# Compare model AIC (lower is better)
+model_aic = {
+    "Weibull AFT": weibull_aft.AIC_,
+    # "Exponential AFT": exp_aft.AIC_,
+    "Log-Normal AFT": lognormal_aft.AIC_,
+    "Log-Logistic AFT": loglogistic_aft.AIC_,
+    "Cox PH": cph.AIC_partial_
+}
+
+model_aic
+#%%
+
+# =============================================
+# Compare using Concordance Index
+# =============================================
+#%%
+# Compute Concordance Index for each parametric model
+cindex_weibull = concordance_index(df["Time_to_Failure"], -weibull_aft.predict_median(df), df["Failure_Event"])
+# cindex_exponential = concordance_index(df["Time_to_Failure"], -exp_aft.predict_median(df), df["Failure_Event"])
+cindex_lognormal = concordance_index(df["Time_to_Failure"], -lognormal_aft.predict_median(df), df["Failure_Event"])
+cindex_loglogistic = concordance_index(df["Time_to_Failure"], -loglogistic_aft.predict_median(df), df["Failure_Event"])
+
+# Store results in a dictionary
+cindex_results = {
+    "Weibull AFT": cindex_weibull,
+    # "Exponential AFT": cindex_exponential,
+    "Log-Normal AFT": cindex_lognormal,
+    "Log-Logistic AFT": cindex_loglogistic,
+}
+
+cindex_results
+# Ok these are terrible...
+#%%
+
+# =============================================
+# Just trying a PYMC Version
+# =============================================
+#%%
+# Extract survival times and event indicators
+T = df["Time_to_Failure"].values  # Survival times
+E = df["Failure_Event"].values  # Censoring indicator (1 = failure, 0 = censored)
+
+# Bayesian Weibull AFT Model
+with pm.Model() as weibull_bayes:
+    
+    # Priors for Weibull parameters
+    alpha = pm.HalfNormal("alpha", sigma=2)  # Shape parameter (positive)
+    lambda_ = pm.HalfNormal("lambda", sigma=2)  # Scale parameter (positive)
+    
+    # Likelihood for observed failures
+    pm.Weibull("obs", alpha, lambda_, observed=T[E == 1])
+
+    # Likelihood adjustment for censored data
+    pm.Potential("censored", pm.logcdf(pm.Weibull.dist(alpha, lambda_), T[E == 0]))
+
+    # MCMC Sampling
+    trace = pm.sample(2000, tune=1000, return_inferencedata=True, cores=2, target_accept=0.9)
+
+# Summarize results
+print(az.summary(trace))
+#%%
