@@ -2,16 +2,16 @@
 Structural Equation Modeling (SEM) for Lifestyle and Health Data
 ---
 
-📌 **Objective**:
+📌 **Situation**:
 - Model the impact of lifestyle choices (exercise diet smoking) on health indicators (BMI, blood pressure, cholesterol) which in tern affect heart disease.
 
-🔍 **Key Takeaways**:
+🔍 **Task**:
 - blah
 
-🔍 **Next Steps**: 
+🔍 **Action**: 
 - blah
 
-📌 **Methodology**:
+📌 **Result**:
 1. Define latent variabels for lifestyle factors from observed variables
     - Lifestyle choices are latent - observed through exercise frequency, healthy eating score, smoking intensity
     - Healht indicators are latent - observed through BMI, blood pressure, cholesterol
@@ -19,7 +19,7 @@ Structural Equation Modeling (SEM) for Lifestyle and Health Data
 2. Model indirect effects of lifesytle factors on heart disease through health indicators
 
 ✍ **Author**: Justin Wall
-📅 **Date**: 03/03/2025
+📅 **Updated**: 03/03/2025
 """
 
 # ==================================
@@ -29,12 +29,13 @@ Structural Equation Modeling (SEM) for Lifestyle and Health Data
 import numpy as np
 import pandas as pd
 from semopy import Model
+from sklearn.preprocessing import StandardScaler
 
 # Set random seed for reproducibility
 np.random.seed(42)
 
 # Sample size
-n = 500  
+n = 500000
 
 # Lifestyle factors
 exercise_freq = np.random.randint(1, 6, n)  # 1 (never) to 5 (daily)
@@ -62,10 +63,12 @@ df = pd.DataFrame({
     "HeartDiseaseRisk": heart_disease_risk
 })
 
+df["HeartDiseaseRisk"] = df["HeartDiseaseRisk"].astype(float)
+
 # Check distribution of HeartDiseaseRisk
 print(df["HeartDiseaseRisk"].value_counts(normalize=True))
 
-df.head()
+print(df.head())
 
 # 500 Observations
 # Lifestyle Factors:
@@ -81,12 +84,20 @@ df.head()
 # Outcome:
 # HeartDiseaseRisk (Binary: 1 = At risk, 0 = Not at risk)
 
+print(df.nunique())  # Check unique values per column
+print(df.isnull().sum())  # Check for missing values
 #%%
 
 # ==========================
 # Define SEM Model
 # ==========================
 #%%
+scaler = StandardScaler()
+df_scaled = df.copy()
+df_scaled[["Exercise", "HealthyEating", "Smoking", "BMI", "BloodPressure", "Cholesterol"]] = scaler.fit_transform(
+    df[["Exercise", "HealthyEating", "Smoking", "BMI", "BloodPressure", "Cholesterol"]]
+)
+
 # Define the SEM model using lavaan-like syntax - don't use subtraction
 sem_model = """
 # Latent variables
@@ -98,11 +109,24 @@ HealthIndicators ~ Lifestyle
 HeartDiseaseRisk ~ HealthIndicators + Lifestyle
 """
 
+sem_model_simpler = """
+HealthIndicators =~ BMI + BloodPressure + Cholesterol
+HeartDiseaseRisk ~ HealthIndicators
+"""
+
+
 # Create and fit the model
-model = Model(sem_model)
-model.fit(df)
+# model = Model(sem_model)
+model = Model(sem_model_simpler)
+# model.fit(df)
+# model.fit(df_scaled)
+model.fit(df, obj="MLW")
 
 # Get parameter estimates
 estimates = model.inspect("estimates")
 print(estimates)
+
+# Model Diagnostics
+print(model.inspect("modindices"))  # Modification indices
+print(model.inspect("gradient"))  # Gradient to check optimization issue
 #%%
