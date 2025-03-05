@@ -2,24 +2,26 @@
 Structural Equation Modeling (SEM) for Lifestyle and Health Data
 ---
 
-📌 **Situation**:
-- Model the impact of lifestyle choices (exercise diet smoking) on health indicators (BMI, blood pressure, cholesterol) which in tern affect heart disease.
+🔍 **Situation**:
+- Figure out how lifestyle factors (exercise, diet, smoking) affect health indicators (BMI, blood pressure, cholesterol) and heart disease risk.
 
-🔍 **Task**:
-- blah
+📌 **Task**:
 
-🔍 **Action**: 
-- blah
+- Model indirect effects of lifesytle factors on heart disease through health indicators
 
-📌 **Result**:
-1. Define latent variabels for lifestyle factors from observed variables
+✨ **Action**: 
+- Define latent variables for lifestyle factors from observed variables
+
+📈 **Result**:
+- Define latent variabels for lifestyle factors from observed variables
     - Lifestyle choices are latent - observed through exercise frequency, healthy eating score, smoking intensity
     - Healht indicators are latent - observed through BMI, blood pressure, cholesterol
     - Heart disease is observed (1=at risk, 0=not at risk)
-2. Model indirect effects of lifesytle factors on heart disease through health indicators
+- Model indirect effects of lifesytle factors on heart disease through health indicators
+
 
 ✍ **Author**: Justin Wall
-📅 **Updated**: 03/03/2025
+📅 **Updated**: 03/04/2025
 """
 
 # ==================================
@@ -28,6 +30,7 @@ Structural Equation Modeling (SEM) for Lifestyle and Health Data
 #%%
 import numpy as np
 import pandas as pd
+import semopy as sem
 from semopy import Model
 from sklearn.preprocessing import StandardScaler
 
@@ -68,7 +71,7 @@ df["HeartDiseaseRisk"] = df["HeartDiseaseRisk"].astype(float)
 # Check distribution of HeartDiseaseRisk
 print(df["HeartDiseaseRisk"].value_counts(normalize=True))
 
-print(df.head())
+df.head()
 
 # 500 Observations
 # Lifestyle Factors:
@@ -84,8 +87,8 @@ print(df.head())
 # Outcome:
 # HeartDiseaseRisk (Binary: 1 = At risk, 0 = Not at risk)
 
-print(df.nunique())  # Check unique values per column
-print(df.isnull().sum())  # Check for missing values
+# print(df.nunique())  # Check unique values per column
+# print(df.isnull().sum())  # Check for missing values
 #%%
 
 # ==========================
@@ -120,13 +123,29 @@ HeartDiseaseRisk ~ HealthIndicators
 model = Model(sem_model_simpler)
 # model.fit(df)
 # model.fit(df_scaled)
-model.fit(df, obj="MLW")
+model.fit(df, obj="MLW", solver="SLSQP")
+#%%
+
+# ==========================
+# Evaluate SEM Model
+# ==========================
+#%%
+
+# # Get model summary
+# model.inspect(mode='list', what="names", std_est=True)
+
+# # Get model fit statistics
+# sem.calc_stats(model)
+
+# Plot the model
+g = sem.semplot(model, "model.png", show=False)
+g.view()
 
 # Get parameter estimates
-estimates = model.inspect("estimates")
-print(estimates)
+# estimates = model.inspect("estimates")
+# print(estimates)
 
-# Model Diagnostics
-print(model.inspect("modindices"))  # Modification indices
-print(model.inspect("gradient"))  # Gradient to check optimization issue
+# # Model Diagnostics
+# print(model.inspect("modindices"))  # Modification indices
+# print(model.inspect("gradient"))  # Gradient to check optimization issue
 #%%
