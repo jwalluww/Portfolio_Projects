@@ -3,22 +3,46 @@ Structural Equation Modeling (SEM) for Lifestyle and Health Data
 ---
 
 🔍 **Situation**:
-- Figure out how lifestyle factors (exercise, diet, smoking) affect health indicators (BMI, blood pressure, cholesterol) and heart disease risk.
+We wanted to understand how lifestyle choices such as exercise, diet, and smoking influence health indicators like BMI, blood pressure, and cholesterol — and how these factors collectively impact heart disease risk.
+The goal was to assess both direct and indirect effects of lifestyle on heart disease risk to uncover deeper relationships beyond simple correlations.
 
 📌 **Task**:
-
-- Model indirect effects of lifesytle factors on heart disease through health indicators
+We aimed to build a Structural Equation Model (SEM) to:
+- Identify key latent variables that group related behaviors (e.g., "Lifestyle" and "Health Indicators").
+- Model the indirect effects of lifestyle factors on heart disease through health indicators.
+- Quantify the relative impact of different variables to inform practical insights for healthcare interventions.
 
 ✨ **Action**: 
-- Define latent variables for lifestyle factors from observed variables
+Data Generation:
+- Created a synthetic dataset with 500,000 observations.
+- Balanced the HeartDiseaseRisk variable using the median risk score to ensure variability between at-risk and not-at-risk groups.
+- Scaled the data to improve model convergence.
+Model Definition:
+- Defined two latent variables:
+  - Lifestyle (Exercise + HealthyEating + Smoking)
+  - Health Indicators (BMI + BloodPressure + Cholesterol)
+- Specified the SEM structure:
+  - HealthIndicators ~ Lifestyle (Indirect effect)
+  - HeartDiseaseRisk ~ HealthIndicators + Lifestyle (Direct and indirect effects)
+Model Fitting & Evaluation:
+- Used semopy with the Maximum Likelihood Weighted (MLW) objective function and SLSQP optimizer to improve convergence.
+- Diagnosed model issues with modification indices and gradient checks.
 
 📈 **Result**:
-- Define latent variabels for lifestyle factors from observed variables
-    - Lifestyle choices are latent - observed through exercise frequency, healthy eating score, smoking intensity
-    - Healht indicators are latent - observed through BMI, blood pressure, cholesterol
-    - Heart disease is observed (1=at risk, 0=not at risk)
-- Model indirect effects of lifesytle factors on heart disease through health indicators
+Key Findings from Model Estimates:
+- BMI had a strong relationship with Health Indicators (Coefficient = 1.000)
+- Blood Pressure showed a meaningful effect on Health Indicators (Coefficient = 2.528, p < 0.001)
+- Cholesterol had the largest effect on Health Indicators (Coefficient = 9.070, p < 0.001)
+- The total effect of Health Indicators on HeartDiseaseRisk was modest (Coefficient = 0.103, p < 0.001)
+Insights for Decision-Making:
+- Cholesterol emerged as the most influential health indicator, making it a prime target for interventions.
+- Lifestyle changes (exercise, healthy eating, quitting smoking) had their strongest impact indirectly by improving BMI, blood pressure, and cholesterol.
+- To reduce heart disease risk, focusing on reducing cholesterol levels appears to have the highest impact.
 
+🚀 Next Steps / Additional Analysis
+- Consider introducing interaction terms (e.g., Exercise × Smoking) to capture complex lifestyle behaviors.
+- Test alternative models to explore non-linear relationships or feedback loops.
+- Perform a Causal DAG analysis to validate causal effects and explore intervention scenarios like smoking cessation or dietary improvements.
 
 ✍ **Author**: Justin Wall
 📅 **Updated**: 03/04/2025
@@ -69,7 +93,7 @@ df = pd.DataFrame({
 df["HeartDiseaseRisk"] = df["HeartDiseaseRisk"].astype(float)
 
 # Check distribution of HeartDiseaseRisk
-print(df["HeartDiseaseRisk"].value_counts(normalize=True))
+# print(df["HeartDiseaseRisk"].value_counts(normalize=True))
 
 df.head()
 
@@ -148,4 +172,18 @@ g.view()
 # # Model Diagnostics
 # print(model.inspect("modindices"))  # Modification indices
 # print(model.inspect("gradient"))  # Gradient to check optimization issue
+# print(model.inspect("fit"))
+
+# A lot of these model.inspect aspects are returning None
+# Using teh model.png, from healthindicators node...
+# - BMI: 1.000
+# - Blood Pressure: 2.528, pval 0.00
+# - Cholesterol: 9.070, pval 0.00
+# - HeartDiseaseRisk: 0.103, pval 0.00
+
+# When to use each
+# Approach: Scenario
+# Structural Equation Model (SEM): You want to model direct and indirect effects of exercise, diet, and smoking on heart disease using latent variables like "Lifestyle" and "Health Indicators".
+# Bayesian Network (BN): You have incomplete data and want to infer missing values and calculate the probability of heart disease given certain conditions (e.g., P(HeartDisease
+# Causal DAG (DoWhy/PyMC): You want to perform causal inference using do-calculus, e.g., “If we force someone to quit smoking (intervention), how much will their heart disease risk decrease?”
 #%%

@@ -1,30 +1,38 @@
 """
 Double Delta (Difference-in-Differences) Method for Loyalty Program Impact Analysis
+---
 
-📌 **Objective**:
-- Measure the causal impact of a treatment on customer spending.
-- Use the Double Delta (Difference-in-Differences) method to control for natural spending trends.
-- Validate results using OLS regression.
+🔍 **Situation**:
+We wanted to measure the causal impact of a loyalty program on customer spending.
+Simply observing spending changes might not isolate the true effect since spending naturally fluctuates over time.
+To account for this, we employed the Double Delta (Difference-in-Differences) method to control for natural spending trends and ensure our conclusions were based on causal evidence rather than external factors.
 
-🔍 **Key Takeaways**:
-- **Pre-Treatment Spending**: Average spending before the program for both groups.
-- **Post-Treatment Spending**: Spending changes after the program.
-- **Double Delta Effect**: The true treatment effect of the loyalty program, isolating organic spending trends.
-- **Robustness Check**: Regression approach confirms statistical significance.
+📌 **Task**:
+✅ Simulate customer spending data to create a realistic scenario.
+✅ Compute the Double Delta Effect using the Difference-in-Differences method to measure the loyalty program's effect.
+✅ Run an OLS regression model as a robustness check to confirm statistical significance.
 
-📌 **Methodology**:
-1. **Simulate customer spending data** before and after the program.
-2. **Compute Double Delta Effect**: Difference-in-Differences (DiD) estimator.
-3. **Run Regression for Robustness**:
-   - Fit an **Ordinary Least Squares (OLS) model**: `spending ~ treatment * time`.
-   - Validate statistical significance of treatment effects.
+✨ **Action**: 
+Created Synthetic Data:
+- Simulated 1,000 customer records with baseline spending, natural growth, and potential treatment effects.
+Calculated Double Delta Effect:
+- Compared spending changes for treated (loyalty program) and control (non-participants) groups both before and after the loyalty program.
+- Computed the Difference-in-Differences (DiD) value to isolate the loyalty program’s causal impact.
+Performed Robustness Check with Regression:
+- Ran an Ordinary Least Squares (OLS) regression model
+- Verified that the treatment effect term (treatment:time) was statistically significant.
 
-📊 **Interpretation**:
-- **If the Double Delta Effect is positive**, the loyalty program increased spending.
-- **If not significant**, the observed effect may be due to external factors.
+📈 **Result**:
+✅ The Double Delta Effect was $15.10, indicating that customers who joined the loyalty program spent $15.10 more on average than those who did not, after accounting for natural spending growth.
+✅ The OLS Regression confirmed this result with a positive and significant interaction term (treatment:time = 15.0951, p < 0.001), strengthening our confidence that the loyalty program caused the increase in spending.
 
-✍ **Author**: Justin Wall  
-📅 **Date**: 02/15/2025  
+🚀 Next Steps / Additional Analysis
+- Explore whether the effect varies across customer segments (e.g., high-value vs low-value customers).
+- Test if the observed effect persists over longer time periods.
+- Investigate potential confounders such as seasonality or promotional campaigns that may have influenced results.
+
+✍ **Author**: Justin Wall
+📅 **Updated**: 03/04/2025
 """
 
 # ==========================================
@@ -79,6 +87,11 @@ print(f"Post-Treatment Spending (Treated): ${post_treated:.2f}")
 print(f"Pre-Treatment Spending (Control): ${pre_control:.2f}")
 print(f"Post-Treatment Spending (Control): ${post_control:.2f}")
 print(f"Double Delta Effect: ${double_delta:.2f}")
+# Pre-Treatment Spending (Treated): $101.63
+# Post-Treatment Spending (Treated): $126.60
+# Pre-Treatment Spending (Control): $102.32
+# Post-Treatment Spending (Control): $112.20
+# Double Delta Effect: $15.10
 #%%
 
 
@@ -97,4 +110,7 @@ df_long["time"] = df_long["time"].map({"pre_spending": 0, "post_spending": 1})
 # Run Difference-in-Differences regression
 model = smf.ols("spending ~ treatment * time", data=df_long).fit()
 print(model.summary())
+# - treatment: -0.6966, pval: 0.585
+# - time: 9.8792, pval: 0.000
+# - treatment:time: 15.0951, 0.000
 #%%

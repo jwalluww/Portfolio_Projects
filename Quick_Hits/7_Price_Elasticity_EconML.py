@@ -1,20 +1,17 @@
 """
 Price Elasticity of Demand - EconML DML Model
+---
 
-📌 **Objective**:
-- 
+🔍 **Situation**:
 
-🔍 **Key Takeaways**:
-- 
+📌 **Task**:
 
-📌 **Methodology**:
-1. 
+✨ **Action**: 
 
-📊 **Interpretation**:
-- 
+📈 **Result**:
 
-✍ **Author**: Justin Wall  
-📅 **Date**: 02/25/2025  
+✍ **Author**: Justin Wall
+📅 **Updated**: 03/04/2025
 """
 
 # ==========================================

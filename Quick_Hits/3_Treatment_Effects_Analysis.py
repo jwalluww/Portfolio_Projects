@@ -1,12 +1,13 @@
 """
 Treatment Effects Analysis - Observational & Experimental Studies
+---
 
-📌 **Objective**:
+🔍 **Situation**:
 - Estimate the impact of a treatment on purchases.
 - Use **Propensity Score Matching (PSM)** to estimate **ATT**.
 - Compare treatment and control groups while reducing bias.
 
-🔍 **Key Takeaways**:
+📌 **Task**:
 - **ATE**: The treatment had a lift of X% across all users.
 - **ATT (Using PSM)**: The effect was higher for those who received the email, showing X% uplift.
 - **PSM worked well** to create a balanced comparison group.
@@ -14,13 +15,21 @@ Treatment Effects Analysis - Observational & Experimental Studies
     - Try Causal Forests to estimate **CATE** for personalized targeting.
     - Use **Inverse Probability Weighting (IPW)** for an alternative ATT estimation.
 
-📌 **Methodology**:
-1. **Compute Propensity Scores** (Logistic Regression).
-2. **Perform Nearest Neighbor Matching** to find similar untreated users.
-3. **Estimate ATT** using matched pairs.
+✨ **Action**: 
+- **ATE**: The treatment had a lift of X% across all users.
+- **ATT (Using PSM)**: The effect was higher for those who received the email, showing X% uplift.
+- **PSM worked well** to create a balanced comparison group.
+- **Next Steps**: 
+    - Try Causal Forests to estimate **CATE** for personalized targeting.
+    - Use **Inverse Probability Weighting (IPW)** for an alternative ATT estimation.
+
+📈 **Result**:
+- **Compute Propensity Scores** (Logistic Regression).
+- **Perform Nearest Neighbor Matching** to find similar untreated users.
+- **Estimate ATT** using matched pairs.
 
 ✍ **Author**: Justin Wall
-📅 **Date**: 02/13/2025
+📅 **Updated**: 03/04/2025 
 """
 
 # =========================================
@@ -72,6 +81,7 @@ df.head()
 ate = (df["y1"] - df["y0"]).mean()
 print(f"ATE: {ate:.2f}")
 #%%
+# ATE: 10.05
 
 # =========================================
 # Average Treatment Effect on the Treated  
@@ -80,6 +90,7 @@ print(f"ATE: {ate:.2f}")
 att = (df[df["treatment"] == 1]["y1"] - df[df["treatment"] == 1]["y0"]).mean()
 print(f"ATT: {att:.2f}")
 #%%
+# ATT: 10.68
 
 # =========================================
 # Average Treatment Effect on the Untreated 
@@ -88,6 +99,7 @@ print(f"ATT: {att:.2f}")
 atu = (df[df["treatment"] == 0]["y1"] - df[df["treatment"] == 0]["y0"]).mean()
 print(f"ATU: {atu:.2f}")
 #%%
+# ATU: 9.14
 
 # ========================================= 
 # Individual Treatment Effect               
@@ -105,10 +117,13 @@ cate_by_education = df.groupby("education")["ITE"].mean()
 print("CATE by Education Level:")
 print(cate_by_education)
 #%%
-
-
-
-
+# CATE by Education Level:
+# education
+# 1     6.972344
+# 2     9.118123
+# 3    11.084062
+# 4    12.792153
+# Name: ITE, dtype: float64
 
 # =========================================
 # Create Synthetic Dataset for Experimental Study
@@ -168,7 +183,7 @@ df.head()
 ate = df[df['treatment'] == 1]['purchase'].mean() - df[df['treatment'] == 0]['purchase'].mean()
 print(f"Estimated ATE: {ate:.4f}")
 #%%
-
+# Estimated ATE: -0.0030
 # Since we cannot observe counterfactuals, we simply subtract the means to calculate the ATE, it's basically the lift
 # Overall campaign effectiveness on entire customer base
 
@@ -208,7 +223,6 @@ matched_control = control.iloc[indices.flatten()].reset_index(drop=True)
 matched_df = treated.copy()
 matched_df["matched_control_purchase"] = matched_control["purchase"]
 #%%
-
 # Create model with treatment as target, match using k-nearest neighbors
 
 # ========================================= 
@@ -223,7 +237,7 @@ print(f"Estimated ATT using PSM: {att:.4f}")
 # att = df[df['treatment'] == 1]['purchase'].mean() - df[df['treatment'] == 1]['y0'].mean()
 # print(f"Estimated ATT: {att:.4f}")
 #%%
-
+# Estimated ATT using PSM: -0.0009
 # Impact on engaged customers - effect on those who received the email
 # Match each treated individual with a similar untreated individual based on covariates
 
@@ -246,7 +260,7 @@ df_control["weight"] = df_control["ps"] / (1 - df_control["ps"])
 atu = (df_control["purchase"] * df_control["weight"]).sum() / df_control["weight"].sum()
 print(f"Estimated ATU: {atu:.4f}")
 #%%
-
+# Estimated ATU: 0.0610
 # What we missed out on - effect on those who did not receive the email
 # Use inverse probability weighting (IPW) to reweight the control group to resemble the treated group.
 

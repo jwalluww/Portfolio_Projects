@@ -1,26 +1,44 @@
 """
 Linear Regression Assumptions & Diagnostics
+---
 
-📌 **Objective**:
-- Assess the assumptions of **Linear Regression** using simulated marketing campaign data.
-- Examine **linearity, independence, normality, homoscedasticity, and multicollinearity**.
-- Identify potential violations and suggest corrective measures.
+🔍 **Situation**:
+We aimed to build a reliable linear regression model to predict customer conversions based on marketing data.
+Since linear regression relies heavily on certain assumptions,
+we needed to confirm those assumptions held true to ensure the model’s accuracy and reliability.
 
-🔍 **Key Takeaways**:
-- **Linearity**: Checked via residual plots to ensure a straight-line relationship.
-- **Independence of Errors**: Verified using the **Durbin-Watson test**.
-- **Normality of Residuals**: Assessed through histograms and the **Shapiro-Wilk test**.
-- **Homoscedasticity**: Evaluated via residual scatter plots and **Levene’s test**.
-- **Multicollinearity**: Diagnosed using the **Variance Inflation Factor (VIF)**.
+📌 **Task**:
+Our objective was to:
+✅ Generate synthetic marketing data to simulate real-world conditions.
+✅ Fit a linear regression model using predictors such as ad spend, email exposure, website visits, and previous purchases.
+✅ Validate five key regression assumptions:
+    - Linearity (Residual plots)
+    - Independence of Errors (Durbin-Watson test)
+    - Normality of Residuals (Histogram & Shapiro-Wilk test)
+    - Homoscedasticity (Residual scatterplot & Levene’s test)
+    - Multicollinearity (Variance Inflation Factor - VIF)
 
-📌 **Methodology**:
-1. Generate synthetic marketing data with variables like ad spend, email exposure, and conversions.
-2. Fit an **Ordinary Least Squares (OLS) regression model**.
-3. Validate assumptions using diagnostic tests and plots.
-4. Provide interpretation and potential remedies for assumption violations.
+✨ **Action**: 
+Created Synthetic Data:
+- Simulated 200 records with realistic marketing data.
+Fitted a Linear Regression Model:
+- Used statsmodels to fit an Ordinary Least Squares (OLS) regression model.
+Tested Assumptions:
+✅ Linearity — Used a Residuals vs Fitted plot to confirm no clear pattern.
+✅ Independence of Errors — Ran the Durbin-Watson test (value ~2 indicated no autocorrelation).
+❗ Normality of Residuals — The Shapiro-Wilk test revealed a p-value < 0.05, indicating non-normal residuals.
+✅ Homoscedasticity — The Levene’s test showed a p-value > 0.05, confirming constant variance.
+❗ Multicollinearity — The VIF test flagged a few variables with VIF > 5, indicating moderate correlation.
 
-✍ **Author**: Justin Wall  
-📅 **Date**: 02/15/2025  
+📈 **Result**:
+✅ The linear regression model successfully identified relationships between marketing activities and customer conversions.
+✅ While most assumptions were satisfied, we found evidence of non-normal residuals and moderate multicollinearity.
+✅ To address these issues:
+    - We applied a log transformation to the target variable to improve normality.
+    - We explored feature reduction and considered Principal Component Analysis (PCA) to mitigate multicollinearity.
+
+✍ **Author**: Justin Wall
+📅 **Updated**: 03/04/2025 
 """
 
 # ========================================== #

@@ -1,28 +1,26 @@
 """
 Bayesian Network for Supply Chain Risk Mitigation using PGMPY
+---
 
-📌 **Objective**:
+🔍 **Situation**:
 - Simple Bayesian Network to estimate supply chain risk using PGMPY.
 
-📃 **Methodology**:
-Bayesian Networks (BNs)
+📌 **Task**:
+- Directed Acyclic Graph (DAG) where nodes represent variables, and edges represent causal or probabilistic dependencies.
+- Uses Conditional Probability Tables (CPTs) to define relationships.
+- Ideal for causal modeling, decision support, and prediction.
+- Use case fit: ✅ Best for supply chain risk estimation because disruptions often follow a causal chain (e.g., raw material shortages → production delays → supplier failure).
+- PGMPY also supports Markov Networks but follow undirect graphs that do not have causal relationship - not as good for supply chain risk estimation.
 
-Directed Acyclic Graph (DAG) where nodes represent variables, and edges represent causal or probabilistic dependencies.
-Uses Conditional Probability Tables (CPTs) to define relationships.
-Ideal for causal modeling, decision support, and prediction.
-Use case fit: ✅ Best for supply chain risk estimation because disruptions often follow a causal chain (e.g., raw material shortages → production delays → supplier failure).
-PGMPY also supports Markov Networks but follow undirect graphs that do not have causal relationship - not as good for supply chain risk estimation.
-
-🔍 **Key Takeaways**:
+✨ **Action**: 
 - We can make inferences about the probability of events in a supply chain given observed data. 
 
-🏹 **Next Steps**: 
+📈 **Result**:
 - Extend the model to include more variables (e.g., transportation delays, natural disasters).
 - More complex inferences (e.g., estimating the probability of multiple events occurring simultaneously).
 
-
 ✍ **Author**: Justin Wall
-📅 **Date**: 02/16/2025
+📅 **Updated**: 03/04/2025 
 """
 
 # =============================================

@@ -1,21 +1,22 @@
 """
 Hidden Markov Model (HMM) for Customer Journey Analysis
+---
 
-📌 **Objective**:
+🔍 **Situation**:
 - Create synthetic customer journey data with new observation types.
 - Build a Hidden Markov Model (HMM) to predict hidden states from observed actions.
 
-🔍 **Key Takeaways**:
+📌 **Task**:
 - We can use HMMs to model sequences of observations and infer hidden states.
 
-🏹 **Next Steps**: 
+✨ **Action**: 
 - Research more advanced methods or complex situations
 
-📌 **Methodology**:
+📈 **Result**:
 - **Step 1**: Create Fake Dataset for Customer Journey
 
 ✍ **Author**: Justin Wall
-📅 **Date**: 02/20/2025
+📅 **Updated**: 03/04/2025
 """
 
 # =============================================
