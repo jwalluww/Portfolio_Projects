@@ -3,30 +3,44 @@ Treatment Effects Analysis - Observational & Experimental Studies
 ---
 
 🔍 **Situation**:
-- Estimate the impact of a treatment on purchases.
-- Use **Propensity Score Matching (PSM)** to estimate **ATT**.
-- Compare treatment and control groups while reducing bias.
+    We aimed to estimate the impact of an email marketing campaign on customer purchases.
+    Since this was an observational study where treatment assignment wasn’t randomized,
+    we needed to account for potential biases in the data to isolate the true effect of the campaign.
 
 📌 **Task**:
-- **ATE**: The treatment had a lift of X% across all users.
-- **ATT (Using PSM)**: The effect was higher for those who received the email, showing X% uplift.
-- **PSM worked well** to create a balanced comparison group.
-- **Next Steps**: 
-    - Try Causal Forests to estimate **CATE** for personalized targeting.
-    - Use **Inverse Probability Weighting (IPW)** for an alternative ATT estimation.
+    Our goal was to:
+        ✅ Estimate the Average Treatment Effect (ATE) to measure the overall impact.
+        ✅ Use Propensity Score Matching (PSM) to compute the Average Treatment Effect on the Treated (ATT) for customers who received the email.
+        ✅ Explore alternative methods such as Inverse Probability Weighting (IPW) for further robustness.
+        ✅ Investigate Conditional Average Treatment Effects (CATE) using Causal Forests to identify personalized treatment effects across different customer segments.
 
 ✨ **Action**: 
-- **ATE**: The treatment had a lift of X% across all users.
-- **ATT (Using PSM)**: The effect was higher for those who received the email, showing X% uplift.
-- **PSM worked well** to create a balanced comparison group.
-- **Next Steps**: 
-    - Try Causal Forests to estimate **CATE** for personalized targeting.
-    - Use **Inverse Probability Weighting (IPW)** for an alternative ATT estimation.
+    Created Synthetic Data:
+        Simulated 5,000 customer records with realistic features like age, income, and purchase history.
+    Estimated Propensity Scores:
+        Fit a Logistic Regression model to predict the probability of receiving treatment based on covariates.
+    Performed Propensity Score Matching (PSM):
+        Used Nearest Neighbor Matching to pair treated customers with similar untreated ones based on their propensity scores.
+    Estimated Treatment Effects:
+        ✅ ATE — Compared mean purchase rates between treated and untreated groups.
+        ✅ ATT (Using PSM) — Measured the treatment effect on those who received the email.
+        ✅ ATU — Used Inverse Probability Weighting (IPW) to measure the effect on untreated customers.
+        ✅ CATE — Implemented Causal Forests to understand subgroup-specific effects.
+        ✅ ITE — Predicted individual-level treatment effects using the X-Learner for further insights.
+    Validation:
+        Compared results across methods to ensure consistent findings.
 
 📈 **Result**:
-- **Compute Propensity Scores** (Logistic Regression).
-- **Perform Nearest Neighbor Matching** to find similar untreated users.
-- **Estimate ATT** using matched pairs.
+    ✅ ATE showed a slight negative effect, indicating the campaign had no overall uplift when measured across all users.
+    ✅ ATT (Using PSM) revealed a stronger positive effect for those who received the email, suggesting the campaign effectively targeted engaged customers.
+    ✅ ATU was minimal, confirming that non-recipients were unlikely to convert even if targeted.
+    ✅ CATE analysis revealed that higher-income and high-purchase-history segments responded most positively to the campaign.
+    ✅ ITE provided granular insights into individual-level treatment responses, supporting personalized targeting strategies.
+
+🚀 Next Steps / Recommendations
+    Consider targeted marketing efforts that focus on identified high-responders.
+    Explore Causal Forests or Bayesian models for improved subgroup analysis.
+    Test campaign adjustments to improve the overall ATE by refining targeting strategies or email content.
 
 ✍ **Author**: Justin Wall
 📅 **Updated**: 03/04/2025 
