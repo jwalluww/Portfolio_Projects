@@ -1,14 +1,36 @@
 """
 Predictive Machine Maintenance using Survival Analysis
 ---
-
 🔍 **Situation**:
+    Our manufacturing plant faced costly downtime due to unexpected machine failures.
+    Traditional fixed-interval maintenance was inefficient,
+    often performing maintenance too early (wasting resources) or too late (leading to unplanned failures).
+    We needed a smarter solution that predicts machine failures to improve maintenance scheduling.
 
 📌 **Task**:
+    - Identify survival times and understand overall failure patterns using the Kaplan-Meier estimator.
+    - Compare failure rates across machine groups (e.g., high vs. low vibration) using the Log-rank test.
+    - Identify key risk factors that drive machine failure by building a Cox Proportional Hazards model.
+    - Develop a proactive maintenance strategy by simulating costs across different maintenance policies (e.g., reactive, time-based, and condition-based strategies).
+    - Expand the analysis by adding new variables (e.g., humidity and maintenance history) and experimenting with alternative models like the Random Survival Forest and Parametric Models (Weibull, Log-Normal, etc.).
+    - Explore Bayesian methods with PyMC to compare predictive performance and interpret the uncertainty in the model estimates.
 
 ✨ **Action**: 
+    - Data Preparation: Created a synthetic dataset that mimicked real-world machine operating conditions, including factors like temperature, vibration, and load.
+    - Kaplan-Meier Analysis: Visualized survival curves to assess failure trends and identify differences between high and low vibration groups.
+    - Cox Model: Used a Cox Proportional Hazards model to quantify the impact of temperature, vibration, and load on machine survival. Expanded the model to include humidity and maintenance history for improved accuracy.
+    - Maintenance Strategy Simulation: Simulated maintenance costs under different strategies to estimate cost savings from predictive maintenance.
+    - Random Survival Forest: Applied a non-parametric Random Survival Forest model for improved handling of complex interactions.
+    - Parametric Models: Evaluated Weibull, Log-Normal, and Log-Logistic models to assess their predictive performance.
+    - Bayesian Survival Analysis: Built a Bayesian Weibull AFT model using PyMC to compare against frequentist methods and assess uncertainty.
 
 📈 **Result**:
+    - Kaplan-Meier Analysis: Machines with high vibration had significantly faster failure rates (p-value < 0.01).
+    - Cox Model Insights: The hazard ratios showed that temperature and load had strong impacts on failure risk, while vibration was less predictive. The improved model with humidity and maintenance history improved the concordance index slightly (from 0.55 to 0.57).
+    - Maintenance Strategy Simulation: Condition-based maintenance (triggered when failure probability exceeded 50% in the next 10 days) resulted in the lowest overall cost and minimized unplanned downtime.
+    - Random Survival Forest: Delivered similar predictive performance to the Cox model (concordance index ~ 0.55) but allowed for better handling of non-linear interactions.
+    - Parametric Models: The Weibull AFT model performed best among parametric models, but none drastically outperformed the Cox model.
+    - Bayesian Survival Model: The Bayesian Weibull model provided valuable uncertainty estimates, which helped visualize the risk spread and informed better decision-making for maintenance timing.
 
 ✍ **Author**: Justin Wall
 📅 **Updated**: 03/04/2025
@@ -304,6 +326,8 @@ model_aic = {
     "Log-Logistic AFT": loglogistic_aft.AIC_,
     "Cox PH": cph.AIC_partial_
 }
+
+# If hte weibpull p(rho) is greater than 1 it in idicates that the hazard rate is increasing over time
 
 model_aic
 #%%
