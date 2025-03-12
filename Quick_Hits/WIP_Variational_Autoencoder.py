@@ -117,3 +117,19 @@ with torch.no_grad():
 synthetic_df = pd.DataFrame(synthetic_data, columns=["Amount", "Time", "Merchant Type", "Transaction Type", "Fraud Label"])
 print(synthetic_df.head())
 #%%
+
+Anomaly Detection (e.g., Isolation Forest, DBSCAN)
+Recommendation Systems (e.g., Collaborative Filtering, Matrix Factorization)
+Time Series Forecasting (e.g., ARIMA, Prophet)
+Graph-Based Machine Learning (e.g., Node Classification, Link Prediction)
+Text Classification (e.g., Sentiment Analysis with Naive Bayes or Transformer models)
+Autoencoders for Anomaly Detection
+Fairness in Machine Learning (e.g., Demographic Parity, Equalized Odds)
+Contrastive Learning (e.g., SimCLR for self-supervised learning)
+Bayesian Optimization for Hyperparameter Tuning
+Neural Networks for Tabular Data (e.g., TabNet, NODE)
+Geospatial Analysis (e.g., Clustering stores by location, Voronoi diagrams)
+Generative AI (e.g., Variational Autoencoders for data augmentation)
+Federated Learning (e.g., Training models on distributed data)
+Explainability Techniques (e.g., SHAP, LIME, Counterfactual Explanations)
+Simulating Causal Effects (e.g., Synthetic Control Method, G-Computation)

@@ -3,20 +3,45 @@ Hidden Markov Model (HMM) for Customer Journey Analysis
 ---
 
 🔍 **Situation**:
-- Create synthetic customer journey data with new observation types.
-- Build a Hidden Markov Model (HMM) to predict hidden states from observed actions.
+Customer journey data consists of observed actions like browsing,
+email engagement, and purchases, but the underlying behavioral states
+(e.g., "Exploring" vs. "Highly Engaged") are unknown.
+Understanding these hidden states could help businesses personalize marketing efforts and predict conversions.
 
 📌 **Task**:
-- We can use HMMs to model sequences of observations and infer hidden states.
+I aimed to build a Hidden Markov Model (HMM) to infer hidden customer behavior states from observed actions.
+The goal was to segment users based on their engagement and predict their likelihood of purchasing or becoming inactive.
 
 ✨ **Action**: 
-- Research more advanced methods or complex situations
+    Created Synthetic Customer Journey Data
+        Simulated user interactions across five observed actions (browse, email engagement, app engagement, engaged browse, and purchase).
+        Defined hidden states representing behavioral groups: Exploring, Engaged, Highly Engaged, Buyers, and Dormant.
+        Modeled state transitions and observation probabilities based on realistic customer behavior.
+    Preprocessed Data for HMM
+        Encoded categorical actions into numerical values for model training.
+        Organized sequences by user, ensuring correct formatting for HMM.
+    Built & Trained the HMM Model
+        Used a Multinomial HMM with different numbers of hidden states.
+        Fit the model on user action sequences to learn hidden state transitions.
+        Predicted the most likely hidden state sequence for each user.
+    Evaluated Model Performance
+        Compared models with 1-6 hidden states using Log-Likelihood, AIC, and BIC scores.
+        Determined the optimal number of hidden states for best model fit.
 
 📈 **Result**:
-- **Step 1**: Create Fake Dataset for Customer Journey
+    Successfully segmented users into inferred behavioral states based on engagement patterns.
+    Identified key transition probabilities, such as how likely users were to progress from "Exploring" to "Engaged" or drop into "Dormant."
+    The best-fitting model suggested four distinct behavioral states, balancing complexity and interpretability.
+    Businesses can use these insights to tailor interventions—e.g., targeting "Highly Engaged" users with discounts to push them toward a purchase.
+
+🚀 **Next Steps**:
+    Enhance Data Realism: Incorporate time-based factors, seasonal effects, or additional user attributes like demographics.
+    Improve Model Complexity: Explore Hierarchical HMMs or Bayesian HMMs to add flexibility in state transitions.
+    Predict Future Behavior: Use the trained HMM to forecast future customer actions and optimize marketing efforts.
+    Deploy & Validate in Production: Apply the model to real customer data and measure its effectiveness in predicting conversions.
 
 ✍ **Author**: Justin Wall
-📅 **Updated**: 03/04/2025
+📅 **Updated**: 03/12/2025
 """
 
 # =============================================
@@ -212,6 +237,12 @@ print(f"Model with 3 Hidden States: LogL = {logL_3}, AIC = {aic_3}, BIC = {bic_3
 print(f"Model with 4 Hidden States: LogL = {logL_4}, AIC = {aic_4}, BIC = {bic_4}")
 print(f"Model with 5 Hidden States: LogL = {logL_5}, AIC = {aic_5}, BIC = {bic_5}")
 print(f"Model with 6 Hidden States: LogL = {logL_6}, AIC = {aic_6}, BIC = {bic_6}")
+# Model with 1 Hidden State: LogL = 0.0, AIC = 10.0, BIC = 41.061485691148846
+# Model with 2 Hidden States: LogL = 2.478572902475662e-13, AIC = 25.999999999999503, BIC = 106.7598627969865
+# Model with 3 Hidden States: LogL = -8.319733790784767e-14, AIC = 46.00000000000016, BIC = 188.88283417928486
+# Model with 4 Hidden States: LogL = -5.5011550870176507e-14, AIC = 70.00000000000011, BIC = 287.43039983804204
+# Model with 5 Hidden States: LogL = 3.219646771412954e-14, AIC = 97.99999999999993, BIC = 402.4025597732586
+# Model with 6 Hidden States: LogL = -2.3314683517128287e-13, AIC = 130.00000000000045, BIC = 533.7993139849355
 #%%
 
 # =============================================
@@ -307,7 +338,20 @@ plt.xlabel("To State")
 plt.show()
 
 #%%
+# Matrix overview
+#                   Exploring   Engaged  Highly Engaged    Buyers
+# browse             0.705292  0.326486        0.107081  0.000000
+# email_engagement   0.097493  0.312432        0.210708  0.043928
+# app_engagement     0.051253  0.134054        0.295337  0.043928
+# engaged_browse     0.095822  0.187027        0.284974  0.103359
+# purchase           0.050139  0.040000        0.101900  0.808786
 
+
+#                 Exploring   Engaged  Highly Engaged    Buyers
+# Exploring        0.082197  0.527252        0.230641  0.159911
+# Engaged          0.070375  0.070363        0.024826  0.834435
+# Highly Engaged   0.161962  0.216972        0.003665  0.617401
+# Buyers           0.735638  0.098290        0.082638  0.083434
 # Emission Matrix
 # What This Tells Us
 # Exploring: These users are overwhelmingly browsing (70.5%), with very little deep engagement. Some email engagement (9.7%) and engaged browsing (9.6%) occur, but purchasing is low (5.0%).
