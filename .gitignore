@@ -9,6 +9,7 @@ __pycache__/
 
 # Datasets
 *.csv
+!/data/sample.csv
 *.parquet
 *.feather
 *.h5
