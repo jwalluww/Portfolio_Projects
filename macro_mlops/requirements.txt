@@ -1,0 +1,10 @@
+fredapi
+pandas
+scikit-learn
+joblib
+fastapi
+uvicorn
+evidently
+dash
+airflow
+requests

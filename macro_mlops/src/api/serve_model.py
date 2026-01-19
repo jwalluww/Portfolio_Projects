@@ -1,0 +1,50 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+import joblib
+import numpy as np
+import pandas as pd
+
+app = FastAPI(title="Inflation Predictor API")
+
+# Load the model
+model = joblib.load("macro_mlops/src/models/model.joblib")
+
+# Define expected input schema
+class InflationInput(BaseModel):
+    cpi_lag1: float
+    unemployment_rate_lag1: float
+    interest_rate_lag1: float
+    oil_price_lag1: float
+    gdp_lag1: float
+    m2_money_lag1: float
+
+@app.get("/")
+def root():
+    return {"message": "Inflation prediction API is up and running."}
+
+@app.post("/predict")
+def predict(input_data: InflationInput):
+    # Turn request into array
+    # features = np.array([[
+    #     input_data.cpi_lag1,
+    #     input_data.unemployment_rate_lag1,
+    #     input_data.interest_rate_lag1,
+    #     input_data.oil_price_lag1,
+    #     input_data.gdp_lag1,
+    #     input_data.m2_money_lag1
+    #     ]])
+    
+    # prediction = model.predict(features)[0]
+
+
+    columns = [
+        "cpi_lag1",
+        "unemployment_rate_lag1",
+        "interest_rate_lag1",
+        "oil_price_lag1",
+        "gdp_lag1",
+        "m2_money_lag1"
+    ]
+    features_df = pd.DataFrame([input_data.dict()], columns=columns)
+    prediction = model.predict(features_df)[0]
+    return {"predicted_inflation": float(prediction)}
