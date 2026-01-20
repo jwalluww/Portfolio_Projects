@@ -6,9 +6,9 @@ import joblib
 import os
 import json
 
-DATA_PATH = "macro_mlops/data/processed/fred_data.csv"
-MODEL_PATH = "macro_mlops/src/models/model.joblib"
-METRICS_PATH = "macro_mlops/src/models/metrics.json"
+DATA_PATH = "data/processed/fred_data.csv"
+MODEL_PATH = "src/models/model.joblib"
+METRICS_PATH = "src/models/metrics.json"
 
 def train_model():
     # Load the processed data

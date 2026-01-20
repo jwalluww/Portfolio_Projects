@@ -6,5 +6,7 @@ fastapi
 uvicorn
 evidently
 dash
-airflow
+# airflow
 requests
+sqlalchemy
+psycopg2-binary

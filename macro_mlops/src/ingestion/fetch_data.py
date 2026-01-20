@@ -41,6 +41,6 @@ def fetch_fred(fred_cols, start_date="2000-01-01", end_date=None):
 
 if __name__ == "__main__":
     df = fetch_fred(fred_cols)
-    df.to_csv(f"macro_mlops/data/raw/fred_data.csv")
+    df.to_csv(f"data/raw/fred_data.csv")
     print("Data fetched and saved to CSV.")
     print(df.head())

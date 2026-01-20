@@ -1,7 +1,7 @@
 import pandas as pd
 
-RAW_DATA_PATH = "macro_mlops/data/raw/fred_data.csv"
-PROCESSED_DATA_PATH = "macro_mlops/data/processed/fred_data.csv"
+RAW_DATA_PATH = "data/raw/fred_data.csv"
+PROCESSED_DATA_PATH = "data/processed/fred_data.csv"
 
 def make_features():
     df = pd.read_csv(RAW_DATA_PATH, parse_dates=["date"])

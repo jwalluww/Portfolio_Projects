@@ -7,7 +7,7 @@ import pandas as pd
 app = FastAPI(title="Inflation Predictor API")
 
 # Load the model
-model = joblib.load("macro_mlops/src/models/model.joblib")
+model = joblib.load("src/models/model.joblib")
 
 # Define expected input schema
 class InflationInput(BaseModel):
