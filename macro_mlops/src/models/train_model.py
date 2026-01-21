@@ -6,6 +6,7 @@ import joblib
 import os
 import json
 
+# Define paths
 DATA_PATH = "data/processed/fred_data.csv"
 MODEL_PATH = "src/models/model.joblib"
 METRICS_PATH = "src/models/metrics.json"
@@ -49,6 +50,7 @@ def train_model():
         print(f"{k}: {v:.4f}")
 
     # Save model + metrics
+    # joblib is good/standard for sklearn models and large numpy arrays
     joblib.dump(model, MODEL_PATH)
     with open(METRICS_PATH, "w") as f:
         json.dump(metrics, f, indent=2)

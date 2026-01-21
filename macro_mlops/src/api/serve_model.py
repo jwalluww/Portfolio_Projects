@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import joblib
 import numpy as np
 import pandas as pd
+from scr.utils.db import SessionLocal, PredictionLog # Importing the database session and model
 
 app = FastAPI(title="Inflation Predictor API")
 
@@ -24,18 +25,6 @@ def root():
 
 @app.post("/predict")
 def predict(input_data: InflationInput):
-    # Turn request into array
-    # features = np.array([[
-    #     input_data.cpi_lag1,
-    #     input_data.unemployment_rate_lag1,
-    #     input_data.interest_rate_lag1,
-    #     input_data.oil_price_lag1,
-    #     input_data.gdp_lag1,
-    #     input_data.m2_money_lag1
-    #     ]])
-    
-    # prediction = model.predict(features)[0]
-
 
     columns = [
         "cpi_lag1",
@@ -45,6 +34,15 @@ def predict(input_data: InflationInput):
         "gdp_lag1",
         "m2_money_lag1"
     ]
+
     features_df = pd.DataFrame([input_data.dict()], columns=columns)
     prediction = model.predict(features_df)[0]
+
+    # Log scores to local DB for monitoring
+    db = SessionLocal()
+    record = PredictionLog(**input_data.dict(), prediction=prediction)
+    db.add(record)
+    db.commit()
+    db.close()
+
     return {"predicted_inflation": float(prediction)}
