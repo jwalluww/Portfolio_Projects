@@ -5,3 +5,5 @@
 <!-- make sure to open docker first if you get errors --!>
 <!-- to create db: docker run --name inflation-db -e POSTGRES_PASSWORD=inflation -e POSTGRES_USER=justin -e POSTGRES_DB=inflation -p 5432:5432 -d postgres -->
 <!-- python -c "from src.utils.db import init_db; init_db()" -->
+<!-- docker start inflation-db -->
+<!-- open the hood for pgsql: docker exec -it inflation-db psql -U justin -d inflation -->
