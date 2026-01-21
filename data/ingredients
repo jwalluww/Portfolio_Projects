@@ -1,0 +1,21 @@
+ingredient_id	ingredient_name	category	protein_pct	fat_pct	fiber_pct	ash_pct	moisture_pct	cost_per_kg	allergens	max_inclusion_pct
+I001	Chicken meal	animal_protein	65.0	12.0	1.5	7.0	8.0	$1.80		35.0
+I002	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	8.0	$2.40		30.0
+I003	Salmon meal	animal_protein	60.0	10.0	1.0	6.0	8.0	$2.70		25.0
+I004	Turkey meal	animal_protein	62.0	12.0	1.5	7.0	8.0	$2.05		35.0
+I005	Beef meal	animal_protein	55.0	13.0	2.0	9.0	8.0	$2.10		25.0
+I006	Pea protein	plant_protein	80.0	2.0	2.5	6.0	8.0	$1.90	legume	20.0
+I007	Soybean meal	plant_protein	48.0	1.5	3.5	6.0	11.0	$0.75	soy	18.0
+I008	Potato starch	starch	1.0	0.2	0.5	1.0	12.0	$0.95		35.0
+I009	Brown rice	starch	8.0	2.0	1.0	1.5	12.0	$0.85	grain	35.0
+I010	Corn meal	starch	9.0	3.5	2.0	1.5	12.0	$0.65	grain,corn	35.0
+I011	Chicken fat	fat	0.0	99.0	0.0	0.0	0.5	$1.60		12.0
+I012	Canola oil	fat	0.0	100.0	0.0	0.0	0.2	$1.90		10.0
+I013	Beet pulp	fiber	9.0	1.0	18.0	4.0	10.0	$0.70		8.0
+I014	Cellulose	fiber	0.0	0.0	80.0	1.0	6.0	$0.90		6.0
+I015	Brewer's yeast	other	45.0	2.0	1.0	6.0	8.0	$1.10		6.0
+I016	Dicalcium phosphate	other	0.0	0.0	0.0	100.0	1.0	$0.55		1.5
+I017	Salt	other	0.0	0.0	0.0	100.0	1.0	$0.10		0.8
+I018	Natural flavor	other	0.0	0.0	0.0	0.0	5.0	$3.50		1.5
+I019	Vitamins & minerals premix	premix	0.0	0.0	0.0	0.0	3.0	$3.00		2.0
+I020	Taurine	premix	0.0	0.0	0.0	0.0	1.0	$8.00		0.2

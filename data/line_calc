@@ -1,0 +1,230 @@
+recipe_id	ingredient_id	inclusion_pct	ingredient_name	category	protein_pct	fat_pct	fiber_pct	moisture_pct	cost_per_kg	protein_contrib	fat_contrib	fiber_contrib	moisture_contrib	cost_contrib
+R001	I001	50.2	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	32.6	6.0	0.8	4.0	$0.90
+R001	I003	23.5	Salmon meal	animal_protein	60.0	10.0	1.0	8.0	$2.70	14.1	2.4	0.2	1.9	$0.63
+R001	I012	12.5	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	12.5	0.0	0.0	$0.24
+R001	I013	7.4	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.7	0.1	1.3	0.7	$0.05
+R001	I018	4.3	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.2	$0.15
+R001	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R001	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R002	I002	43.7	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	25.3	6.1	0.9	3.5	$1.05
+R002	I003	9.5	Salmon meal	animal_protein	60.0	10.0	1.0	8.0	$2.70	5.7	1.0	0.1	0.8	$0.26
+R002	I007	12.8	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	6.1	0.2	0.4	1.4	$0.10
+R002	I012	18.4	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	18.4	0.0	0.0	$0.35
+R002	I013	7.8	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.7	0.1	1.4	0.8	$0.05
+R002	I017	5.7	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.1	$0.01
+R002	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R002	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R003	I002	1.4	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	0.8	0.2	0.0	0.1	$0.03
+R003	I005	56.4	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	31.0	7.3	1.1	4.5	$1.18
+R003	I011	24.2	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	24.0	0.0	0.1	$0.39
+R003	I014	7.7	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	6.2	0.5	$0.07
+R003	I015	2.2	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.0	0.0	0.0	0.2	$0.02
+R003	I017	6.0	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.1	$0.01
+R003	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R003	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R004	I005	64.6	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	35.5	8.4	1.3	5.2	$1.36
+R004	I011	14.2	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	14.1	0.0	0.1	$0.23
+R004	I013	12.2	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	1.1	0.1	2.2	1.2	$0.09
+R004	I016	6.9	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.1	$0.04
+R004	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R004	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R005	I002	13.9	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	8.1	1.9	0.3	1.1	$0.33
+R005	I005	54.6	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	30.0	7.1	1.1	4.4	$1.15
+R005	I012	13.3	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	13.3	0.0	0.0	$0.25
+R005	I014	9.9	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	7.9	0.6	$0.09
+R005	I016	4.0	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.02
+R005	I017	2.2	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R005	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R005	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R006	I004	57.1	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	35.4	6.9	0.9	4.6	$1.17
+R006	I006	10.2	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	8.2	0.2	0.3	0.8	$0.19
+R006	I012	12.8	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	12.8	0.0	0.0	$0.24
+R006	I013	10.7	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	1.0	0.1	1.9	1.1	$0.07
+R006	I016	7.1	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.1	$0.04
+R006	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R006	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R007	I001	38.4	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	25.0	4.6	0.6	3.1	$0.69
+R007	I002	18.8	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	10.9	2.6	0.4	1.5	$0.45
+R007	I006	8.4	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	6.7	0.2	0.2	0.7	$0.16
+R007	I012	15.7	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	15.7	0.0	0.0	$0.30
+R007	I014	10.2	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	8.2	0.6	$0.09
+R007	I015	5.3	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	2.4	0.1	0.1	0.4	$0.06
+R007	I016	1.1	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.01
+R007	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R007	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R008	I004	64.2	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	39.8	7.7	1.0	5.1	$1.32
+R008	I011	19.4	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	19.2	0.0	0.1	$0.31
+R008	I013	9.3	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.8	0.1	1.7	0.9	$0.07
+R008	I015	5.0	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	2.3	0.1	0.1	0.4	$0.06
+R008	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R008	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R009	I002	40.4	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	23.4	5.7	0.8	3.2	$0.97
+R009	I007	23.1	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	11.1	0.3	0.8	2.5	$0.17
+R009	I012	21.4	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	21.4	0.0	0.0	$0.41
+R009	I013	8.0	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.7	0.1	1.4	0.8	$0.06
+R009	I016	5.0	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.1	$0.03
+R009	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R009	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R010	I001	54.5	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	35.4	6.5	0.8	4.4	$0.98
+R010	I004	6.0	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	3.7	0.7	0.1	0.5	$0.12
+R010	I012	20.5	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	20.5	0.0	0.0	$0.39
+R010	I014	11.1	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	8.9	0.7	$0.10
+R010	I017	0.8	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R010	I018	5.0	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.3	$0.18
+R010	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R010	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R011	I001	1.2	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	0.8	0.1	0.0	0.1	$0.02
+R011	I004	66.0	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	40.9	7.9	1.0	5.3	$1.35
+R011	I012	18.3	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	18.3	0.0	0.0	$0.35
+R011	I013	8.5	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.8	0.1	1.5	0.9	$0.06
+R011	I017	3.9	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R011	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R011	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R012	I001	67.3	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	43.7	8.1	1.0	5.4	$1.21
+R012	I012	17.5	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	17.5	0.0	0.0	$0.33
+R012	I014	6.0	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	4.8	0.4	$0.05
+R012	I015	0.5	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	0.2	0.0	0.0	0.0	$0.01
+R012	I018	6.6	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.3	$0.23
+R012	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R012	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R013	I001	28.0	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	18.2	3.4	0.4	2.2	$0.50
+R013	I004	42.3	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	26.2	5.1	0.6	3.4	$0.87
+R013	I011	12.0	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	11.9	0.0	0.1	$0.19
+R013	I013	10.2	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.9	0.1	1.8	1.0	$0.07
+R013	I018	5.4	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.3	$0.19
+R013	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R013	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R014	I002	27.9	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	16.2	3.9	0.6	2.2	$0.67
+R014	I006	42.0	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	33.6	0.8	1.1	3.4	$0.80
+R014	I012	16.1	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	16.1	0.0	0.0	$0.31
+R014	I013	7.0	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.6	0.1	1.3	0.7	$0.05
+R014	I017	1.5	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R014	I018	3.4	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.2	$0.12
+R014	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R014	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R015	I001	57.8	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	37.6	6.9	0.9	4.6	$1.04
+R015	I002	3.6	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	2.1	0.5	0.1	0.3	$0.09
+R015	I007	2.1	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	1.0	0.0	0.1	0.2	$0.02
+R015	I011	15.4	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	15.2	0.0	0.1	$0.25
+R015	I014	11.6	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	9.3	0.7	$0.10
+R015	I016	3.3	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.02
+R015	I018	4.1	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.2	$0.14
+R015	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R015	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R016	I001	12.8	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	8.3	1.5	0.2	1.0	$0.23
+R016	I005	43.0	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	23.7	5.6	0.9	3.4	$0.90
+R016	I006	11.2	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	9.0	0.2	0.3	0.9	$0.21
+R016	I011	17.2	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	17.0	0.0	0.1	$0.28
+R016	I014	9.5	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	7.6	0.6	$0.09
+R016	I015	4.2	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.9	0.1	0.0	0.3	$0.05
+R016	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R016	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R017	I003	4.7	Salmon meal	animal_protein	60.0	10.0	1.0	8.0	$2.70	2.8	0.5	0.0	0.4	$0.13
+R017	I004	53.4	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	33.1	6.4	0.8	4.3	$1.09
+R017	I011	23.0	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	22.8	0.0	0.1	$0.37
+R017	I014	11.8	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	9.4	0.7	$0.11
+R017	I016	5.0	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.1	$0.03
+R017	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R017	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R018	I001	33.3	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	21.6	4.0	0.5	2.7	$0.60
+R018	I002	32.2	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	18.7	4.5	0.6	2.6	$0.77
+R018	I011	19.5	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	19.3	0.0	0.1	$0.31
+R018	I013	7.8	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.7	0.1	1.4	0.8	$0.05
+R018	I016	2.3	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.01
+R018	I018	2.8	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.1	$0.10
+R018	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R018	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R019	I001	50.2	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	32.6	6.0	0.8	4.0	$0.90
+R019	I006	16.0	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	12.8	0.3	0.4	1.3	$0.30
+R019	I012	20.5	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	20.5	0.0	0.0	$0.39
+R019	I014	7.0	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	5.6	0.4	$0.06
+R019	I015	2.1	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	0.9	0.0	0.0	0.2	$0.02
+R019	I017	2.1	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R019	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R019	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R020	I002	20.6	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	11.9	2.9	0.4	1.6	$0.49
+R020	I005	38.5	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	21.2	5.0	0.8	3.1	$0.81
+R020	I007	8.1	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	3.9	0.1	0.3	0.9	$0.06
+R020	I011	15.7	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	15.5	0.0	0.1	$0.25
+R020	I014	8.0	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	6.4	0.5	$0.07
+R020	I016	3.1	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.02
+R020	I017	3.9	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R020	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R020	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R021	I001	12.6	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	8.2	1.5	0.2	1.0	$0.23
+R021	I002	36.4	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	21.1	5.1	0.7	2.9	$0.87
+R021	I007	13.0	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	6.2	0.2	0.5	1.4	$0.10
+R021	I011	18.9	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	18.7	0.0	0.1	$0.30
+R021	I013	9.4	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.8	0.1	1.7	0.9	$0.07
+R021	I015	7.5	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	3.4	0.2	0.1	0.6	$0.08
+R021	I016	0.1	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.00
+R021	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R021	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R022	I002	70.8	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	41.1	9.9	1.4	5.7	$1.70
+R022	I011	14.4	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	14.3	0.0	0.1	$0.23
+R022	I013	8.4	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.8	0.1	1.5	0.8	$0.06
+R022	I015	3.2	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.4	0.1	0.0	0.3	$0.04
+R022	I018	1.1	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.1	$0.04
+R022	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R022	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R023	I002	20.0	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	11.6	2.8	0.4	1.6	$0.48
+R023	I006	46.1	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	36.9	0.9	1.2	3.7	$0.88
+R023	I012	18.6	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	18.6	0.0	0.0	$0.35
+R023	I014	7.9	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	6.3	0.5	$0.07
+R023	I017	5.3	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.1	$0.01
+R023	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R023	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R024	I004	8.8	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	5.5	1.1	0.1	0.7	$0.18
+R024	I005	54.6	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	30.0	7.1	1.1	4.4	$1.15
+R024	I012	14.7	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	14.7	0.0	0.0	$0.28
+R024	I013	12.9	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	1.2	0.1	2.3	1.3	$0.09
+R024	I016	1.7	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.01
+R024	I017	5.2	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.1	$0.01
+R024	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R024	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R025	I001	27.3	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	17.7	3.3	0.4	2.2	$0.49
+R025	I004	21.3	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	13.2	2.6	0.3	1.7	$0.44
+R025	I006	17.8	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	14.2	0.4	0.4	1.4	$0.34
+R025	I012	14.2	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	14.2	0.0	0.0	$0.27
+R025	I014	10.4	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	8.3	0.6	$0.09
+R025	I016	4.3	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.02
+R025	I017	2.6	Salt	other	0.0	0.0	0.0	1.0	$0.10	0.0	0.0	0.0	0.0	$0.00
+R025	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R025	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R026	I004	54.7	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	33.9	6.6	0.8	4.4	$1.12
+R026	I006	13.8	Pea protein	plant_protein	80.0	2.0	2.5	8.0	$1.90	11.0	0.3	0.3	1.1	$0.26
+R026	I012	16.0	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	16.0	0.0	0.0	$0.30
+R026	I014	8.1	Cellulose	fiber	0.0	0.0	80.0	6.0	$0.90	0.0	0.0	6.5	0.5	$0.07
+R026	I015	3.9	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.8	0.1	0.0	0.3	$0.04
+R026	I016	1.4	Dicalcium phosphate	other	0.0	0.0	0.0	1.0	$0.55	0.0	0.0	0.0	0.0	$0.01
+R026	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R026	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R027	I001	16.1	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	10.5	1.9	0.2	1.3	$0.29
+R027	I003	47.8	Salmon meal	animal_protein	60.0	10.0	1.0	8.0	$2.70	28.7	4.8	0.5	3.8	$1.29
+R027	I011	17.9	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	17.7	0.0	0.1	$0.29
+R027	I013	11.5	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	1.0	0.1	2.1	1.2	$0.08
+R027	I018	4.6	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.2	$0.16
+R027	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R027	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R028	I004	47.7	Turkey meal	animal_protein	62.0	12.0	1.5	8.0	$2.05	29.6	5.7	0.7	3.8	$0.98
+R028	I005	22.7	Beef meal	animal_protein	55.0	13.0	2.0	8.0	$2.10	12.5	3.0	0.5	1.8	$0.48
+R028	I011	14.0	Chicken fat	fat	0.0	99.0	0.0	0.5	$1.60	0.0	13.9	0.0	0.1	$0.22
+R028	I013	8.6	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.8	0.1	1.5	0.9	$0.06
+R028	I015	2.7	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.2	0.1	0.0	0.2	$0.03
+R028	I018	2.2	Natural flavor	other	0.0	0.0	0.0	5.0	$3.50	0.0	0.0	0.0	0.1	$0.08
+R028	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R028	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R029	I002	26.0	Lamb meal	animal_protein	58.0	14.0	2.0	8.0	$2.40	15.1	3.6	0.5	2.1	$0.62
+R029	I003	38.3	Salmon meal	animal_protein	60.0	10.0	1.0	8.0	$2.70	23.0	3.8	0.4	3.1	$1.03
+R029	I007	6.0	Soybean meal	plant_protein	48.0	1.5	3.5	11.0	$0.75	2.9	0.1	0.2	0.7	$0.05
+R029	I012	14.5	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	14.5	0.0	0.0	$0.28
+R029	I013	6.7	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.6	0.1	1.2	0.7	$0.05
+R029	I015	6.4	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	2.9	0.1	0.1	0.5	$0.07
+R029	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R029	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
+R030	I001	67.9	Chicken meal	animal_protein	65.0	12.0	1.5	8.0	$1.80	44.1	8.1	1.0	5.4	$1.22
+R030	I012	16.0	Canola oil	fat	0.0	100.0	0.0	0.2	$1.90	0.0	16.0	0.0	0.0	$0.30
+R030	I013	9.7	Beet pulp	fiber	9.0	1.0	18.0	10.0	$0.70	0.9	0.1	1.7	1.0	$0.07
+R030	I015	4.3	Brewer's yeast	other	45.0	2.0	1.0	8.0	$1.10	1.9	0.1	0.0	0.3	$0.05
+R030	I019	2.0	Vitamins & minerals premix	premix	0.0	0.0	0.0	3.0	$3.00	0.0	0.0	0.0	0.1	$0.06
+R030	I020	0.1	Taurine	premix	0.0	0.0	0.0	1.0	$8.00	0.0	0.0	0.0	0.0	$0.01
