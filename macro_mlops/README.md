@@ -7,3 +7,4 @@
 <!-- python -c "from src.utils.db import init_db; init_db()" -->
 <!-- docker start inflation-db -->
 <!-- open the hood for pgsql: docker exec -it inflation-db psql -U justin -d inflation -->
+<!-- to find tables in sql: \dt -->
