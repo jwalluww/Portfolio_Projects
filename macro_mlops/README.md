@@ -8,3 +8,4 @@
 <!-- docker start inflation-db -->
 <!-- open the hood for pgsql: docker exec -it inflation-db psql -U justin -d inflation -->
 <!-- to find tables in sql: \dt -->
+<!-- Ditching apache airflow because it doesn't run well with windows -->
