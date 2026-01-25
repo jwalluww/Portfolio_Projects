@@ -1,17 +1,15 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
 import joblib
-import os
 import json
 
 # Define paths
 DATA_PATH = "data/processed/fred_data.csv"
-MODEL_PATH = "src/models/model.joblib"
+MODEL_PATH = "src/models/model_current.joblib"
 METRICS_PATH = "src/models/metrics.json"
 
-def train_model():
+def train_model(output_path: str):
     # Load the processed data
     df = pd.read_csv(DATA_PATH, parse_dates=["date"])
     df = df.sort_values(by="date")
@@ -51,12 +49,14 @@ def train_model():
 
     # Save model + metrics
     # joblib is good/standard for sklearn models and large numpy arrays
-    joblib.dump(model, MODEL_PATH)
+    joblib.dump(model, output_path)
     with open(METRICS_PATH, "w") as f:
         json.dump(metrics, f, indent=2)
 
-    print(f"\n🎯 Model saved to: {MODEL_PATH}")
+    print(f"\n🎯 Model saved to: {output_path}")
     print(f"📊 Metrics saved to: {METRICS_PATH}")
 
+    return metrics
+
 if __name__ == "__main__":
-    train_model()
+    train_model(MODEL_PATH)
