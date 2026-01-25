@@ -58,11 +58,5 @@ def train_model():
     print(f"\n🎯 Model saved to: {MODEL_PATH}")
     print(f"📊 Metrics saved to: {METRICS_PATH}")
 
-def train_and_save_model(output_path: str):
-    df = load_training_data()
-    model,metrics = train_model(df)
-    joblib.dump(model, output_path)
-    return metrics
-
 if __name__ == "__main__":
     train_model()
