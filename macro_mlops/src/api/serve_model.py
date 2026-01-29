@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Depends, HTTPException
-import threading
+from fastapi import FastAPI, Depends, HTTPException # Return proper errors
+import threading # run stuff in background
 import time
 from pydantic import BaseModel
 import joblib
