@@ -3,7 +3,7 @@ import pandas as pd
 RAW_DATA_PATH = "data/raw/fred_data.csv"
 PROCESSED_DATA_PATH = "data/processed/fred_data.csv"
 
-def make_features():
+def make_features(return_df: bool = False) -> pd.DataFrame | None:
     df = pd.read_csv(RAW_DATA_PATH, parse_dates=["date"])
     df = df.set_index("date").sort_index()
 
@@ -29,6 +29,9 @@ def make_features():
     df.to_csv(PROCESSED_DATA_PATH, index=True)
     print(f"✅ Features saved to {PROCESSED_DATA_PATH}")
     print(df.head())
+
+    if return_df:
+        return df
 
 if __name__ == "__main__":
     make_features()
