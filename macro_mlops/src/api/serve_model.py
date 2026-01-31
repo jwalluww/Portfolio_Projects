@@ -1,19 +1,36 @@
-from fastapi import FastAPI, Depends, HTTPException # Return proper errors
-import threading # run stuff in background
-import time
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import threading
 import joblib
 import os
 import pandas as pd
-from src.utils.db import SessionLocal, PredictionLog # Importing the database session and model
-from src.models.train_model import train_and_save_model  # Ensure the model is trained and saved
+
+from src.utils.db import SessionLocal, PredictionLog
+from src.models.train_model import train_and_save_model
+from macro_mlops.src.monitoring.monitor_drift import check_drift
+
+# =========================
+# Constants & Config
+# =========================
+
+MODEL_CURRENT_PATH = "src/models/model_current.joblib"
+MODEL_CANDIDATE_PATH = "src/models/model_candidate.joblib"
+TRAINING_DATA_PATH = "src/data/training_data.csv"
+
+RETRAIN_SECRET = os.getenv("RETRAIN_SECRET")
+MAX_DRIFT_ROWS = 1000
+
+# =========================
+# App Init
+# =========================
 
 app = FastAPI(title="Inflation Predictor API")
+RETRAINING = False  # in-memory lock
 
-# Load the model
-model = joblib.load("src/models/model.joblib")
+# =========================
+# Schemas
+# =========================
 
-# Define expected input schema
 class InflationInput(BaseModel):
     cpi_lag1: float
     unemployment_rate_lag1: float
@@ -22,70 +39,116 @@ class InflationInput(BaseModel):
     gdp_lag1: float
     m2_money_lag1: float
 
-@app.get("/")
-def root():
-    return {"message": "Inflation prediction API is up and running."}
+# =========================
+# Helper Functions
+# =========================
 
 def load_model():
-    return joblib.load("src/models/model_current.joblib")
+    """Load the currently active model (supports hot swapping)."""
+    return joblib.load(MODEL_CURRENT_PATH)
+
+
+def load_training_data():
+    """Reference dataset for drift detection."""
+    return pd.read_csv(TRAINING_DATA_PATH)
+
+
+def load_recent_predictions(limit: int = MAX_DRIFT_ROWS):
+    """Pull recent prediction logs from Postgres."""
+    db = SessionLocal()
+    records = (
+        db.query(PredictionLog)
+        .order_by(PredictionLog.timestamp.desc())
+        .limit(limit)
+        .all()
+    )
+    db.close()
+
+    return pd.DataFrame([r.__dict__ for r in records])
+
+
+def should_retrain(reference_df, current_df):
+    """Run drift detection and return decision + metrics."""
+    drift_result = check_drift(reference_df, current_df)
+    return drift_result["drift_detected"], drift_result
+
+
+def run_retraining():
+    """Background retraining job."""
+    global RETRAINING
+    RETRAINING = True
+
+    train_and_save_model(output_path=MODEL_CANDIDATE_PATH)
+
+    # Atomic swap
+    os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
+
+    RETRAINING = False
+
+# =========================
+# Endpoints
+# =========================
+
+@app.get("/")
+def root():
+    return {"status": "Inflation prediction API running"}
+
 
 @app.post("/predict")
 def predict(input_data: InflationInput):
-
-    columns = [
-        "cpi_lag1",
-        "unemployment_rate_lag1",
-        "interest_rate_lag1",
-        "oil_price_lag1",
-        "gdp_lag1",
-        "m2_money_lag1"
-    ]
-
-    features_df = pd.DataFrame([input_data.dict()], columns=columns)
     model = load_model()
+
+    features_df = pd.DataFrame([input_data.dict()])
     prediction = model.predict(features_df)[0]
 
-    print("🔥 PREDICT CALLED")
-    print(input_data.dict())
-
-    # Log scores to local DB for monitoring
+    # Log prediction
     db = SessionLocal()
-    record = PredictionLog(**{**input_data.dict(), 'prediction': float(prediction)})
+    record = PredictionLog(
+        **input_data.dict(),
+        prediction=float(prediction)
+    )
     db.add(record)
-    print("🔥 LOGGED TO DB")
     db.commit()
     db.close()
 
     return {"predicted_inflation": float(prediction)}
 
-# We will use a simple global flag to indicate if retraining is in progress
-RETRAINING = False
 
-# Use a secret so not everyone can trigger retraining
 @app.post("/retrain")
-def retrain_model(secret: str):
+def retrain(secret: str):
     global RETRAINING
 
-    # Simple secret check
-    if secret != os.getenv("RETRAIN_SECRET"):
-        return HTTPException(status_code=403, detail="Unauthorized")
-    
-    # Check if already retraining, avoid concurrent retraining
+    # Auth
+    if secret != RETRAIN_SECRET:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    # Concurrency guard
     if RETRAINING:
-        return {"status": "Already running"}
-    
-    def retrain_job():
-        global RETRAINING
-        RETRAINING = True
-        
-        metrics = train_and_save_model(output_path="src/models/model_candidate.joblib")
+        return {"status": "retraining already in progress"}
 
-        # Swap!
-        os.replace("src/models/model_candidate.joblib", "src/models/model_current.joblib")
+    reference_df = load_training_data()
+    current_df = load_recent_predictions()
 
-        RETRAINING = False
-    
-    # This will run in a separate thread to avoid blocking the API
-    threading.Thread(target=retrain_job).start()
+    retrain_decision, drift_metrics = should_retrain(
+        reference_df, current_df
+    )
 
-    return {"status": "Retraining started"}
+    if retrain_decision:
+        threading.Thread(target=run_retraining).start()
+        return {
+            "status": "retraining started",
+            "drift_metrics": drift_metrics,
+        }
+
+    return {
+        "status": "retraining skipped",
+        "drift_metrics": drift_metrics,
+    }
+
+
+@app.get("/drift_status")
+def drift_status():
+    reference_df = load_training_data()
+    current_df = load_recent_predictions()
+    _, drift_metrics = should_retrain(reference_df, current_df)
+    return drift_metrics
