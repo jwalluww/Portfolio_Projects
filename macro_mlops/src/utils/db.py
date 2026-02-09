@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, Column, Float, DateTime, Integer
+from sqlalchemy import create_engine, Column, Float, DateTime, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.dialects.postgresql import JSONB
 import datetime
 import os
 
@@ -28,3 +29,12 @@ class PredictionLog(Base):
 # One-Time: Create Table
 def init_db():
     Base.metadata.create_all(bind=engine)
+
+class RetrainRun(Base):
+    __tablename__ = "retrain_runs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    started_at = Column(DateTime, default=datetime.datetime.utcnow, nullable=False)
+    completed_at = Column(DateTime, nullable=True)
+    status = Column(Text, default="started", nullable=False)
+    metrics = Column(JSONB, nullable=True)
