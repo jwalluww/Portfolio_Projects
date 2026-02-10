@@ -38,3 +38,24 @@ class RetrainRun(Base):
     completed_at = Column(DateTime, nullable=True)
     status = Column(Text, default="started", nullable=False)
     metrics = Column(JSONB, nullable=True)
+
+def start_retrain_run() -> int:
+    db = SessionLocal()
+    run = RetrainRun(status="started")
+    db.add(run)
+    db.commit()
+    db.refresh(run)
+    run_id = run.id
+    db.close()
+    return run_id
+
+
+def finish_retrain_run(run_id: int, status: str, metrics: dict | None = None):
+    db = SessionLocal()
+    run = db.query(RetrainRun).filter(RetrainRun.id == run_id).first()
+    if run:
+        run.completed_at = datetime.datetime.utcnow()
+        run.status = status
+        run.metrics = metrics
+        db.commit()
+    db.close()

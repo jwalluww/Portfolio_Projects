@@ -5,7 +5,7 @@ import joblib
 import os
 import pandas as pd
 
-from src.utils.db import SessionLocal, PredictionLog
+from src.utils.db import SessionLocal, PredictionLog, start_retrain_run, finish_retrain_run
 from src.models.train_model import train_and_save_model
 from macro_mlops.src.monitoring.monitor_drift import check_drift
 
@@ -73,17 +73,24 @@ def should_retrain(reference_df, current_df):
     return drift_result["drift_detected"], drift_result
 
 
-def run_retraining():
-    """Background retraining job."""
+def run_retraining(run_id: int, drift_metrics: dict):
     global RETRAINING
     RETRAINING = True
+    try:
+        train_metrics = train_and_save_model(output_path=MODEL_CANDIDATE_PATH)
+        os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
 
-    train_and_save_model(output_path=MODEL_CANDIDATE_PATH)
+        merged = {
+            "drift": drift_metrics,
+            "train": train_metrics,
+        }
+        finish_retrain_run(run_id, status="succeeded", metrics=merged)
 
-    # Atomic swap
-    os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
-
-    RETRAINING = False
+    except Exception as e:
+        finish_retrain_run(run_id, status="failed", metrics={"error": str(e)})
+        raise
+    finally:
+        RETRAINING = False
 
 # =========================
 # Endpoints
