@@ -7,7 +7,7 @@ import pandas as pd
 
 # Load these from inside docker /app
 from src.utils.db import SessionLocal, PredictionLog, start_retrain_run, finish_retrain_run
-from src.models.train_model import train_and_save_model
+from src.models.train_model import train_model
 from src.monitoring.monitor_drift import check_drift
 
 # =========================
@@ -92,6 +92,12 @@ def run_retraining(run_id: int, drift_metrics: dict):
         raise
     finally:
         RETRAINING = False
+
+def train_and_save_model(output_path: str):
+    df = load_training_data()
+    model, metrics = train_model(df)
+    joblib.dump(model, output_path)
+    return metrics
 
 # =========================
 # Endpoints

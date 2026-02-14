@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
-from api.serve_model import load_training_data
 import joblib
 import json
 
@@ -57,12 +56,6 @@ def train_model(output_path: str):
     print(f"\n🎯 Model saved to: {output_path}")
     print(f"📊 Metrics saved to: {METRICS_PATH}")
 
-    return metrics
-
-def train_and_save_model(output_path: str):
-    df = load_training_data()
-    model, metrics = train_model(df)
-    joblib.dump(model, output_path)
     return metrics
 
 if __name__ == "__main__":
