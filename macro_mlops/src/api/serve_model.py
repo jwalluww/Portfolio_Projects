@@ -5,9 +5,10 @@ import joblib
 import os
 import pandas as pd
 
+# Load these from inside docker /app
 from src.utils.db import SessionLocal, PredictionLog, start_retrain_run, finish_retrain_run
 from src.models.train_model import train_and_save_model
-from macro_mlops.src.monitoring.monitor_drift import check_drift
+from src.monitoring.monitor_drift import check_drift
 
 # =========================
 # Constants & Config
@@ -49,7 +50,7 @@ def load_model():
 
 
 def load_training_data():
-    """Reference dataset for drift detection."""
+    """Reference original training dataset for drift detection."""
     return pd.read_csv(TRAINING_DATA_PATH)
 
 
@@ -136,19 +137,30 @@ def retrain(secret: str):
     reference_df = load_training_data()
     current_df = load_recent_predictions()
 
+    if current_df.empty:
+        return {"status": "no recent predictions to evaluate for drift"}
+
     retrain_decision, drift_metrics = should_retrain(
         reference_df, current_df
     )
 
+    # Create retrain run entry
+    run_id = start_retrain_run()
+
     if retrain_decision:
-        threading.Thread(target=run_retraining).start()
+        threading.Thread(target=run_retraining, args=(run_id, drift_metrics)).start()
         return {
             "status": "retraining started",
+            "run_id": run_id,
             "drift_metrics": drift_metrics,
         }
+    
+    # if skipped, mark run as skipped
+    finish_retrain_run(run_id, status="skipped", metrics={"drift": drift_metrics})
 
     return {
         "status": "retraining skipped",
+        "run_id": run_id,
         "drift_metrics": drift_metrics,
     }
 

@@ -22,6 +22,8 @@
 
 
 <!-- to run docker for api (cli): docker run -p 8000:8000 inflation-api -->
+<!-- or run it in the background: -->
+<!-- docker run -d -p 8000:8000 -e RETRAIN_SECRET=retraininflationapi123 --name inflation-api-container inflation-api -->
 <!-- then open this in browser: http://localhost:8000/docs/ -->
 <!-- make sure to open docker first if you get errors -->
 <!-- using postgres db to log predictions & metrics, macro_mlops/src/utils/db.py -> to log data -->
@@ -35,3 +37,6 @@
 <!-- retrain function using evidently to establish rules for retraining model -->
 <!-- will use data pipeline to manage flow for retraining model -->
 <!-- Using prefect instead of apache airflow because it works better w/windows -->
+
+<!-- Architecture -->
+<!-- /retrain -> drift check -> log retrain run -> background training -> model swap -> finish log -->

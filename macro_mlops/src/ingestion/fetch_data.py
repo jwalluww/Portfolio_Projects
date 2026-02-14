@@ -1,5 +1,3 @@
-# src/ingestion/fetch_data.py
-
 import os
 from dotenv import load_dotenv
 from fredapi import Fred
@@ -18,14 +16,13 @@ fred_cols = {
     "m2_money": "M2SL",  # M2 Money Stock
 }
 
-def fetch_fred(fred_cols, start_date="2000-01-01", end_date=None):
+def fetch_fred(fred_cols, start_date="2000-01-01"):
     """
     Fetch data from FRED for the specified columns and date range.
 
     Parameters:
     fred_cols (dict): Dictionary mapping column names to FRED series IDs.
     start_date (str): Start date for data retrieval in 'YYYY-MM-DD' format.
-    end_date (str or None): End date for data retrieval in 'YYYY-MM-DD' format. If None, fetches up to the latest available date.
 
     Returns:
     pd.DataFrame: DataFrame containing the fetched data with dates as index.
