@@ -1,5 +1,5 @@
 from evidently import Report
-from evidently.metric_preset import DataDriftPreset
+from evidently.presets import DataDriftPreset
 
 def check_drift(reference_df, current_df):
     # Set up a template for the report with the DataDriftPreset
