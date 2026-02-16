@@ -1,3 +1,4 @@
+<!-- C:\\Users\\wallj\\DS_Projects\\Portfolio_Projects\\econ_env\\scrits\\activate      -->
 <!-- Started here https://medium.com/@maximilianoliver25/end-to-end-data-science-in-production-how-i-built-and-deployed-a-full-ml-workflow-6b3d0b0dd262 -->
 <!-- Working on econ_env, python 3.13.9 -->
 <!-- app -> includes the dashboard -->
