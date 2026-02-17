@@ -1,4 +1,4 @@
-<!-- C:\\Users\\wallj\\DS_Projects\\Portfolio_Projects\\econ_env\\scrits\\activate      -->
+<!-- C:\\Users\\wallj\\DS_Projects\\Portfolio_Projects\\econ_env\\scripts\\activate      -->
 <!-- Started here https://medium.com/@maximilianoliver25/end-to-end-data-science-in-production-how-i-built-and-deployed-a-full-ml-workflow-6b3d0b0dd262 -->
 <!-- Working on econ_env, python 3.13.9 -->
 <!-- app -> includes the dashboard -->
@@ -40,4 +40,4 @@
 <!-- Using prefect instead of apache airflow because it works better w/windows -->
 
 <!-- Architecture -->
-<!-- /retrain -> drift check -> log retrain run -> background training -> model swap -> finish log -->
+<!-- /retrain -> fetch latest FRED data -> rebuild feature dataset -> drift check -> train candidate model -> evaluate candidate vs current -> conditionally swap -> log everything -->
