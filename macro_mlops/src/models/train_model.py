@@ -9,9 +9,9 @@ DATA_PATH = "data/processed/fred_data.csv"
 MODEL_PATH = "src/models/model_current.joblib"
 METRICS_PATH = "src/models/metrics.json"
 
-def train_model(output_path: str):
+def train_model(df: pd.DataFrame, output_path: str):
     # Load the processed data
-    df = pd.read_csv(DATA_PATH, parse_dates=["date"])
+    # df = pd.read_csv(DATA_PATH, parse_dates=["date"])
     df = df.sort_values(by="date")
 
     # Time-based split (80/20)
@@ -58,5 +58,9 @@ def train_model(output_path: str):
 
     return metrics
 
+def train_from_file_and_save():
+    df = pd.read_csv(DATA_PATH, parse_dates=["date"])
+    return train_model(df, MODEL_PATH)
+
 if __name__ == "__main__":
-    train_model(MODEL_PATH)
+    train_from_file_and_save()

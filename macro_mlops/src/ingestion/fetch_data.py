@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 from fredapi import Fred
 import pandas as pd
 
+# Raw data path
+RAW_DATA_PATH = "data/raw/fred_data.csv"
+
+# Set up FRED API key
 load_dotenv()
 fred = Fred(api_key=os.getenv("FRED_API_KEY"))
 
@@ -36,8 +40,11 @@ def fetch_fred(fred_cols, start_date="2000-01-01"):
         df = pd.concat([df, data], axis=1)
     return df
 
-if __name__ == "__main__":
+def fetch_fred_and_save():
     df = fetch_fred(fred_cols)
-    df.to_csv(f"data/raw/fred_data.csv")
+    df.to_csv(RAW_DATA_PATH)
     print("Data fetched and saved to CSV.")
     print(df.head())
+
+if __name__ == "__main__":
+    fetch_fred_and_save()

@@ -41,3 +41,9 @@
 
 <!-- Architecture -->
 <!-- /retrain -> fetch latest FRED data -> rebuild feature dataset -> drift check -> train candidate model -> evaluate candidate vs current -> conditionally swap -> log everything -->
+
+
+<!-- NEXT STEPS
+1. continue versioning model
+2. ask chatgpt the next steps
+3. maybe testing the new retraining architecture -->

@@ -1,19 +1,24 @@
 from fastapi import FastAPI, HTTPException
+from features import make_features
 from pydantic import BaseModel
 import threading
 import joblib
 import os
 import pandas as pd
-
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
+from datetime import datetime
 # Load these from inside docker /app
 from src.utils.db import SessionLocal, PredictionLog, start_retrain_run, finish_retrain_run
 from src.models.train_model import train_model
 from src.monitoring.monitor_drift import check_drift
+from src.ingestion.fetch_data import fetch_fred
 
 # =========================
 # Constants & Config
 # =========================
 
+version = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+VERSIONED_MODEL_PATH = f"src/models/model_{version}.joblib"
 MODEL_CURRENT_PATH = "src/models/model_current.joblib"
 MODEL_CANDIDATE_PATH = "src/models/model_candidate.joblib"
 TRAINING_DATA_PATH = "src/data/training_data.csv"
@@ -75,17 +80,43 @@ def should_retrain(reference_df, current_df):
 
 
 def run_retraining(run_id: int, drift_metrics: dict):
+    """Retrain model and update retrain run status in DB."""
     global RETRAINING
     RETRAINING = True
-    try:
-        train_metrics = train_and_save_model(output_path=MODEL_CANDIDATE_PATH)
-        os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
 
-        merged = {
+    try:
+        # 1. Fetch fresh FRED data
+        raw_df = fetch_fred()
+
+        # 2. Build features
+        features_df = make_features(raw_df)
+
+        # 3. Train candidate model
+        candidate_metrics = train_model(
+            features_df, output_path=MODEL_CANDIDATE_PATH
+        )
+
+        # 4. Evaluate current model
+        current_model = load_model()
+        current_metrics = evaluate_model(current_model, features_df)
+
+        # 5 Decide whether to swap
+        improvement = candidate_metrics["rmse"] < current_metrics["rmse"]
+
+        if improvement:
+            os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
+            status = "succeeded"
+        else:
+            status = "no_improvement"
+
+        merged_metrics = {
             "drift": drift_metrics,
-            "train": train_metrics,
+            "train": candidate_metrics,
+            "current": current_metrics,
+            "improvement": improvement
         }
-        finish_retrain_run(run_id, status="succeeded", metrics=merged)
+
+        finish_retrain_run(run_id, status=status, metrics=merged_metrics)
 
     except Exception as e:
         finish_retrain_run(run_id, status="failed", metrics={"error": str(e)})
@@ -93,11 +124,25 @@ def run_retraining(run_id: int, drift_metrics: dict):
     finally:
         RETRAINING = False
 
+
 def train_and_save_model(output_path: str):
+    """Train model and save to disk."""
     df = load_training_data()
-    model, metrics = train_model(df)
+    model, metrics = train_model(df, output_path)
     joblib.dump(model, output_path)
     return metrics
+
+
+def evaluate_model(model, df):
+    """Evaluate model on new data."""
+    X = df.drop(columns=['cpi_target'])
+    y = df['cpi_target']
+    preds = model.predict(X)
+    return {
+        "mae": mean_absolute_error(y, preds),
+        "rmse": root_mean_squared_error(y, preds),
+        "r2": r2_score(y, preds)
+    }
 
 # =========================
 # Endpoints
