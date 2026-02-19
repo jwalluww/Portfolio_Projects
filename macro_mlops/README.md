@@ -43,7 +43,9 @@
 <!-- /retrain -> fetch latest FRED data -> rebuild feature dataset -> drift check -> train candidate model -> evaluate candidate vs current -> conditionally swap -> log everything -->
 
 
-<!-- NEXT STEPS
-1. continue versioning model
-2. ask chatgpt the next steps
-3. maybe testing the new retraining architecture -->
+<!-- 
+NEXT STEPS
+1. testing the new retraining architecture
+-->
+
+curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d "{\"cpi_lag1\": 300,     \"unemployment_rate_lag1\": 4.0,       \"interest_rate_lag1\": 5.0,       \"oil_price_lag1\": 80,       \"gdp_lag1\": 22000,       \"m2_money_lag1\": 20000}"

@@ -1,5 +1,5 @@
+import shutil
 from fastapi import FastAPI, HTTPException
-from features import make_features
 from pydantic import BaseModel
 import threading
 import joblib
@@ -12,15 +12,15 @@ from src.utils.db import SessionLocal, PredictionLog, start_retrain_run, finish_
 from src.models.train_model import train_model
 from src.monitoring.monitor_drift import check_drift
 from src.ingestion.fetch_data import fetch_fred
+from src.features.make_features import make_features
 
 # =========================
 # Constants & Config
 # =========================
 
 version = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
-VERSIONED_MODEL_PATH = f"src/models/model_{version}.joblib"
 MODEL_CURRENT_PATH = "src/models/model_current.joblib"
-MODEL_CANDIDATE_PATH = "src/models/model_candidate.joblib"
+MODEL_CANDIDATE_PATH = f"src/models/model_{version}.joblib"
 TRAINING_DATA_PATH = "src/data/training_data.csv"
 
 RETRAIN_SECRET = os.getenv("RETRAIN_SECRET")
@@ -104,14 +104,15 @@ def run_retraining(run_id: int, drift_metrics: dict):
         improvement = candidate_metrics["rmse"] < current_metrics["rmse"]
 
         if improvement:
-            os.replace(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
+            shutil.copyfile(MODEL_CANDIDATE_PATH, MODEL_CURRENT_PATH)
             status = "succeeded"
         else:
             status = "no_improvement"
 
         merged_metrics = {
+            "model_version": version,
             "drift": drift_metrics,
-            "train": candidate_metrics,
+            "candidate": candidate_metrics,
             "current": current_metrics,
             "improvement": improvement
         }
