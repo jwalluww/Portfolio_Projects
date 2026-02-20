@@ -21,7 +21,7 @@ from src.features.make_features import make_features
 version = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 MODEL_CURRENT_PATH = "src/models/model_current.joblib"
 MODEL_CANDIDATE_PATH = f"src/models/model_{version}.joblib"
-TRAINING_DATA_PATH = "src/data/training_data.csv"
+TRAINING_DATA_PATH = "data/processed/fred_data.csv"
 
 RETRAIN_SECRET = os.getenv("RETRAIN_SECRET")
 MAX_DRIFT_ROWS = 1000

@@ -46,6 +46,30 @@
 <!-- 
 NEXT STEPS
 1. testing the new retraining architecture
+
+Testing the new retraining architecture
+
+1. App boots
+- Success!
+
+2. DB connection works
+- Success!
+
+3. /predict logs correctly
+- Success!
+
+4. Drift endpoint works
+- Fail!
+
+5. Retrain creates DB record
+
+6. Model versioning works
+
+7. Swap logic works
+
+8. Retrain logs metrics
+
+9. Current model actually changes
 -->
 
-curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d "{\"cpi_lag1\": 300,     \"unemployment_rate_lag1\": 4.0,       \"interest_rate_lag1\": 5.0,       \"oil_price_lag1\": 80,       \"gdp_lag1\": 22000,       \"m2_money_lag1\": 20000}"
+<!-- curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d "{\"cpi_lag1\": 300,"unemployment_rate_lag1\": 4.0,"interest_rate_lag1\": 5.0,"oil_price_lag1\": 80,"gdp_lag1\": 22000,"m2_money_lag1\": 20000}" -->
