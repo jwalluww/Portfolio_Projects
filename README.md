@@ -1,8 +1,8 @@
 # Hi, I'm Justin 👋
 
-I'm a data scientist with 10+ years of experience solving real business problems using statistics, causal inference, and Bayesian methods. I work remotely at a tech startup and spend most of my time building models that actually get used — not just notebooks that look good in a slide deck.
+I'm a data scientist with 10+ years of experience solving business problems using statistics, causal inference, and Bayesian methods. I work remotely at a tech startup and spend most of my time building models for businesses across several industries.
 
-I'm especially drawn to problems where the answer isn't obvious and the data is messy. Experimentation design, causal questions, uncertainty quantification — that's where I do my best work.
+I'm especially drawn to problems where the answer isn't obvious and the data is messy. Experimentation design, causal questions, uncertainty quantification, that's where I thrive.
 
 ---
 
@@ -77,22 +77,13 @@ Most of my active projects are synthetic-data-first: I build the method on clean
 
 ---
 
-## A bit more about me
-
-When I'm not doing data science stuff, I'm usually:
-
-- Listening to audiobooks — Stephen King, GRRM, Michael Crichton
-- At an early morning group fitness class (Orangetheory / F45)
-- Hiking, biking, or finding good food somewhere new
-- Following Minnesota sports with unearned optimism
-
 I'm **happily employed but curious** — always interested in conversations about interesting problems, especially in experimentation, causal inference, or Bayesian methods applied to real business decisions.
 
 ---
 
 ## Let's connect
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-your--handle-blue?style=flat&logo=linkedin)](https://linkedin.com/in/YOUR-HANDLE)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-your--handle-blue?style=flat&logo=linkedin)](https://linkedin.com/in/justindwall)
 
 *Replace the LinkedIn URL above with your actual profile link.*
 
